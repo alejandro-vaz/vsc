@@ -51,6 +51,8 @@
       </div>
     </header>
 
+    <div id="api-advanced"></div>
+
     <section class="card fade-in">
       <h2>Modelos de amenaza (versión general)</h2>
       <p>Un modelo de amenaza ayuda a entender quién querría atacar, por qué y cómo. Para 4º ESO lo explicamos con ejemplos: redes sociales, dispositivos móviles y equipos del instituto.</p>
@@ -182,6 +184,25 @@
         observer.observe(el);
       });
     })();
+
+    // load advanced topics from backend
+    async function loadAdvanced(){
+      try{
+        const res = await fetch('/api/advanced');
+        if(!res.ok) throw new Error('no api');
+        const data = await res.json();
+        const container = document.getElementById('api-advanced');
+        data.topics.forEach(t=>{
+          const sec=document.createElement('section');
+          sec.className='card fade-in';
+          sec.innerHTML=`<h2>${t.topic}</h2><p>${t.desc}</p>`;
+          container.appendChild(sec);
+        });
+      }catch(e){
+        console.error('failed advanced fetch',e);
+      }
+    }
+    loadAdvanced();
   </script>
 </body>
 </html>

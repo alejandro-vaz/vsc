@@ -64,14 +64,7 @@
       <p>En esta página ampliamos las herramientas útiles, con ejemplos y una pequeña interacción para entender cuál usar según la situación.</p>
 
       <div class="tools-list" id="tools-list">
-        <div class="tool"><strong>Antivirus</strong><p>Protege contra programas dañinos. Mantenerlo actualizado.</p></div>
-        <div class="tool"><strong>Firewall</strong><p>Controla tráfico y bloquea accesos no deseados a la red.</p></div>
-        <div class="tool"><strong>Backups</strong><p>Copia de seguridad periódica en disco externo o nube. Útil ante fallos o ransomware.</p></div>
-        <div class="tool"><strong>Gestores de contraseñas</strong><p>Generan y guardan contraseñas únicas y complejas.</p></div>
-        <div class="tool"><strong>VPN / Cifrado</strong><p>Oculta tu actividad y protege la conexión, especialmente en redes públicas.</p></div>
-        <div class="tool"><strong>Actualizaciones</strong><p>Instalar parches cierra vulnerabilidades conocidas.</p></div>
-        <div class="tool"><strong>Escáner de vulnerabilidades</strong><p>Busca fallos en sistemas y aplicaciones antes de que sean explotados.</p></div>
-        <div class="tool"><strong>Bloqueador de scripts</strong><p>Evita ejecuciones no autorizadas en el navegador, útil contra exploit kits.</p></div>
+        <!-- items will be loaded from backend -->
       </div>
 
       <div class="interactive">
@@ -110,6 +103,27 @@
   </main>
 
   <script>
+    // load tool list from backend
+    async function loadTools(){
+      try{
+        const res = await fetch('/api/tools');
+        if(!res.ok) throw new Error('no api');
+        const data = await res.json();
+        const container = document.getElementById('tools-list');
+        container.innerHTML = '';
+        data.items.forEach(t=>{
+          const div=document.createElement('div');
+          div.className='tool';
+          div.innerHTML=`<strong>${t.name}</strong><p>${t.why}</p>`;
+          container.appendChild(div);
+        });
+      }catch(e){
+        console.error('tools load failed',e);
+        document.getElementById('tools-list').innerHTML='<div class="tool">Contenido no disponible</div>';
+      }
+    }
+    loadTools();
+
     document.getElementById('btn-check').addEventListener('click',()=>{
       const v = document.getElementById('scenario').value;
       const map = {
@@ -118,7 +132,7 @@
         'perdida':'Restaura desde backup si existe; considera usar software de recuperación si es local.',
         'contraseña':'Usa un gestor de contraseñas y habilita verificación en dos pasos.',
         'wifi':'Conecta mediante una VPN y evita redes Wi‑Fi abiertas sin cifrado.',
-        'intrusion':'Revisa logs e instala o activa un IDS/IPS; cambia contraseñas administrativas.'
+        'intrusion':'Revisa logs e instala o activa un IDS/IPS; cambia contraseñas administrativas.',
         'sinparche':'Acepta la actualización e instala los parches; no lo dejes para más tarde.'
       };
       document.getElementById('suggestion').textContent = map[v] || '';
