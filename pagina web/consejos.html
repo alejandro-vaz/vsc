@@ -108,42 +108,7 @@
 					<span class="professor">Iberseguridad</span>
 				</div>
 				<p>Además de las medidas básicas, aquí van consejos más avanzados para una protección superior.</p>
-
-				<details>
-					<summary><strong>Gestión de Contraseñas</strong></summary>
-					<p>Usa un gestor de contraseñas como LastPass o Bitwarden. Genera contraseñas únicas y largas para cada cuenta.</p>
-					<p><strong>Consejo:</strong> Activa la autenticación multifactor (2FA) en todas las cuentas posibles.</p>
-				</details>
-
-				<details>
-					<summary><strong>Seguridad en Redes</strong></summary>
-					<p>Configura tu router con una contraseña fuerte y deshabilita WPS. Usa redes Wi-Fi separadas para invitados.</p>
-					<p><strong>Avanzado:</strong> Implementa segmentación de red para aislar dispositivos sensibles.</p>
-				</details>
-
-				<details>
-					<summary><strong>Criptografía</strong></summary>
-					<p>Usa herramientas como VeraCrypt para encriptar discos duros. Para comunicaciones, prefiere Signal o WhatsApp con encriptación end-to-end.</p>
-					<p><strong>Ejemplo:</strong> Encripta emails sensibles con PGP.</p>
-				</details>
-
-				<details>
-					<summary><strong>Monitoreo y Auditoría</strong></summary>
-					<p>Revisa regularmente los logs de tu sistema y usa herramientas como Wireshark para analizar tráfico de red.</p>
-					<p><strong>Prevención:</strong> Instala software de monitoreo para detectar anomalías.</p>
-				</details>
-
-				<details>
-					<summary><strong>Seguridad en Desarrollo</strong></summary>
-					<p>Si programas, sigue principios como OWASP para aplicaciones web seguras. Valida entradas y evita inyecciones SQL.</p>
-					<p><strong>Consejo:</strong> Usa herramientas como SonarQube para análisis de código.</p>
-				</details>
-
-				<details>
-					<summary><strong>Respuesta a Incidentes</strong></summary>
-					<p>Ten un plan de respuesta: identifica, contiene, erradica y recupera. Reporta incidentes a autoridades si es necesario.</p>
-					<p><strong>Ejemplo:</strong> En caso de ransomware, desconecta el dispositivo y restaura desde backups.</p>
-				</details>
+				<div id="advice-content"></div>
 			</details>
 
 			<details class="card fade-in" style="margin-top:14px">
@@ -181,6 +146,23 @@
 			});
 		});
 		document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+		// load consejos
+		async function loadConsejos(){
+			try{
+				const res=await fetch('/api/consejos');
+				if(!res.ok) throw new Error('no api');
+				const data=await res.json();
+				const cont=document.getElementById('advice-content');
+				cont.innerHTML='';
+				data.advice.forEach(a=>{
+					const det=document.createElement('details');
+					det.innerHTML='<summary>'+a+'</summary>';
+					cont.appendChild(det);
+				});
+			}catch(e){console.error(e);}
+		}
+		loadConsejos();
 	</script>
 </body>
 </html>

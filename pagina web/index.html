@@ -130,21 +130,12 @@
 						<span class="professor">Iberseguridad</span>
 					</div>
 					<p id="intro">Bienvenido: en esta página exploramos los conceptos básicos de la ciberseguridad y cómo protegerse. Lee los apartados siguientes para más detalles.</p>
-                    <p>En términos sencillos, la ciberseguridad se ocupa de proteger los dispositivos conectados a internet (ordenadores, móviles, consolas) y la información que almacenan. Al igual que en una ciudad hay policías y cámaras, en el mundo digital existen mecanismos que vigilan y controlan el acceso para que solo las personas autorizadas puedan entrar.</p>
+                    <p id="intro-text">En términos sencillos, la ciberseguridad se ocupa de proteger los dispositivos conectados a internet (ordenadores, móviles, consolas) y la información que almacenan. Al igual que en una ciudad hay policías y cámaras, en el mundo digital existen mecanismos que vigilan y controlan el acceso para que solo las personas autorizadas puedan entrar.</p>
                     <div class="placeholder fade-in">[Esquema de red / police]</div>
-                    <p>Hoy en día nuestros teléfonos guardan fotos, conversaciones y contraseñas. Si alguien logra entrar sin permiso, puede causar daño desde robar identidades hasta bloquear equipos con virus.</p>
+                    <p id="more-desc">Hoy en día nuestros teléfonos guardan fotos, conversaciones y contraseñas. Si alguien logra entrar sin permiso, puede causar daño desde robar identidades hasta bloquear equipos con virus.</p>
                     <div class="placeholder fade-in" style="margin-top:10px">[Imagen de móvil inseguro]</div>
-                    <p>Existen varios ámbitos dentro de la ciberseguridad:</p>
-                    <ul>
-                        <li><strong>Seguridad de red:</strong> proteger el flujo de datos entre dispositivos.</li>
-                        <li><strong>Seguridad de la información:</strong> asegurar que los datos no se divulguen o alteren.</li>
-                        <li><strong>Seguridad en aplicaciones:</strong> evitar que los programas sean manipulados.</li>
-                        <li><strong>Ingeniería social:</strong> técnicas que engañan a las personas para que revelen información.</li>
-                        <li><strong>Criptografía:</strong> uso de códigos para que solo puedan leer los datos los autorizados.</li>
-                        <li><strong>Forense digital:</strong> investigar incidentes y recopilar evidencias tras un ataque.</li>
-                        <li><strong>Seguridad en la nube:</strong> proteger datos almacenados en servicios en línea como Google Drive o Dropbox.</li>
-                        <li><strong>Seguridad IoT:</strong> dispositivos inteligentes como termostatos o cámaras que conectan a internet.</li>
-                    </ul>
+                    <div id="areas"></div>
+                    <div id="threats-section"></div>
                     <p>Hay muchas profesiones relacionadas: analistas de seguridad, pentesters (hackers éticos), administradores de sistemas, desarrolladores seguros y más. Cualquiera puede empezar aprendiendo conceptos básicos, practicando en simuladores y usando entornos protegidos como máquinas virtuales.</p>
                     <details>
                         <summary><strong>Roles en seguridad</strong></summary>
@@ -235,12 +226,8 @@
 
                     <details class="card fade-in" style="margin-top:14px">
                         <summary><h3>Incidentes famosos</h3></summary>
-                        <ul>
-                            <li>2007 – Estallido de ataques DDoS contra Estonia, paralizando servicios gubernamentales.</li>
-                            <li>2013 – Filtración de <em>Target</em> que afectó a 40 millones de tarjetas de crédito.</li>
-                            <li>2017 – WannaCry, ransomware que afectó a hospitales y empresas de todo el mundo.</li>
-                            <li>2018 – Facebook-Cambridge Analytica: uso indebido de datos personales de millones de usuarios.</li>
-                            <li>2022 – Vulnerabilidad Log4Shell en Java: millones de servidores potencialmente comprometidos.</li>
+                        <ul id="incidents">
+                            <!-- listado rellenado por JS -->
                         </ul>
                         <p>Estos casos muestran cómo incluso errores pequeños pueden tener impacto global.</p>
                     </details>
@@ -257,15 +244,8 @@
 
                 <details class="card" style="margin-top:14px">
                     <summary><h3>Glosario breve</h3></summary>
-                    <dl>
-                        <dt>Phishing</dt><dd>Engaño por mail o web para robar credenciales.</dd>
-                        <dt>Malware</dt><dd>Software malicioso: virus, troyanos, spyware.</dd>
-                        <dt>Ransomware</dt><dd>Secuestra archivos y exige rescate.</dd>
-                        <dt>Firewall</dt><dd>Filtro que controla el tráfico entre redes.</dd>
-                        <dt>VPN</dt><dd>Red privada virtual que cifra la conexión.</dd>
-                        <dt>IDS/IPS</dt><dd>Sistemas de detección y prevención de intrusos.</dd>
-                        <dt>Zero‑day</dt><dd>Vulnerabilidad desconocida sin parche.</dd>
-                        <dt>Botnet</dt><dd>Red de dispositivos comprometidos controlada por un atacante.</dd>
+                    <dl id="glossary">
+                        <!-- rellenado por JS -->
                     </dl>
                 </details>
 
@@ -324,13 +304,8 @@
 
                 <details class="card fade-in" style="margin-top:12px">
                     <summary><h4>Consejos rápidos</h4></summary>
-                    <ul>
-                        <li>No abras archivos adjuntos de remitentes desconocidos.</li>
-                        <li>Revisa la URL antes de iniciar sesión en un sitio.</li>
-                        <li>Usa redes Wi‑Fi seguras y evita las públicas sin VPN.</li>
-                        <li>Instala solo apps de fuentes oficiales.</li>
-                        <li>Cambia tus contraseñas cada cierto tiempo.</li>
-                        <li>Pregunta a un adulto si algo te resulte extraño.</li>
+                    <ul id="tips">
+                        <!-- consejos desde backend -->
                     </ul>
                 </details>
 			</aside>
@@ -345,10 +320,47 @@
 				const res = await fetch('/api/content');
 				if(!res.ok) throw new Error('No hay backend');
 				const data = await res.json();
+				// intro texts
 				document.getElementById('intro').textContent = data.intro;
+				document.getElementById('intro-text').textContent = data.intro;
+				// tools
 				const toolsList = document.getElementById('tools-list');
 				toolsList.innerHTML = '';
 				data.tools.forEach(t=>{const li=document.createElement('li');li.textContent = t;toolsList.appendChild(li)});
+				// areas of security
+				const areaContainer = document.getElementById('areas');
+				if(areaContainer){
+					areaContainer.innerHTML = '<h3>Ámbitos de la ciberseguridad:</h3>';
+					const ul = document.createElement('ul');
+					['Seguridad de red','Seguridad de la información','Seguridad en aplicaciones','Ingeniería social','Criptografía','Forense digital','Seguridad en la nube','Seguridad IoT'].forEach(a=>{const li=document.createElement('li');li.textContent=a;ul.appendChild(li);});
+					areaContainer.appendChild(ul);
+				}
+				// threats
+				const threatSection=document.getElementById('threats-section');
+				if(threatSection && data.threats){
+					threatSection.innerHTML='<h3>Amenazas</h3>';
+					const ul=document.createElement('ul');
+					data.threats.forEach(t=>{const li=document.createElement('li');li.innerHTML='<strong>'+t.title+':</strong> '+t.desc;ul.appendChild(li);});
+					threatSection.appendChild(ul);
+				}
+				// glossary
+				const glossary = document.getElementById('glossary');
+				if(glossary && data.glossary){
+					glossary.innerHTML='';
+					data.glossary.forEach(g=>{const dt=document.createElement('dt');dt.textContent=g.term;const dd=document.createElement('dd');dd.textContent=g.definition;glossary.appendChild(dt);glossary.appendChild(dd);});
+				}
+				// incidents
+				const incidents=document.getElementById('incidents');
+				if(incidents && data.incidents){
+					incidents.innerHTML='';
+					data.incidents.forEach(i=>{const li=document.createElement('li');li.textContent=i;incidents.appendChild(li);});
+				}
+				// tips
+				const tipsEl=document.getElementById('tips');
+				if(tipsEl && data.tips){
+					tipsEl.innerHTML='';
+					data.tips.forEach(t=>{const li=document.createElement('li');li.textContent=t;tipsEl.appendChild(li);});
+				}
 			}catch(e){
 				document.getElementById('intro').textContent = 'Servidor backend no disponible localmente. El contenido está en el frontend.';
 				document.getElementById('tools-list').innerHTML = '<li>Antivirus, firewalls, copias de seguridad, gestores de contraseñas.</li>';

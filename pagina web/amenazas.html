@@ -108,62 +108,13 @@
 					<span class="professor">Iberseguridad</span>
 				</div>
 				<p>Las amenazas cibernéticas son ataques o vulnerabilidades que pueden comprometer la seguridad de tus datos y dispositivos. A continuación, detallamos las más comunes.</p>
-
-				<details>
-					<summary><strong>Phishing</strong></summary>
-					<p>Es un tipo de ataque donde los ciberdelincuentes se hacen pasar por entidades confiables para obtener información sensible como contraseñas o datos bancarios.</p>
-					<p><strong>Ejemplo:</strong> Recibes un email que parece de tu banco pidiendo que verifiques tu cuenta haciendo clic en un enlace.</p>
-					<p><strong>Prevención:</strong> No hagas clic en enlaces sospechosos y verifica siempre la URL.</p>
-					<div class="placeholder fade-in">[Imagen de email phishing]</div>
-				</details>
-
-				<details>
-					<summary><strong>Malware</strong></summary>
-					<p>Software malicioso diseñado para dañar o infiltrarse en sistemas. Incluye virus, troyanos, spyware y ransomware.</p>
-					<p><strong>Tipos:</strong></p>
-					<ul>
-						<li><strong>Virus:</strong> Se replica y se propaga infectando otros archivos.</li>
-						<li><strong>Troyanos:</strong> Parecen programas legítimos pero permiten acceso no autorizado.</li>
-						<li><strong>Ransomware:</strong> Encripta tus archivos y exige un rescate.</li>
-					</ul>
-					<p><strong>Prevención:</strong> Instala antivirus y evita descargar archivos de fuentes desconocidas.</p>
-				</details>
-
-				<details>
-					<summary><strong>Ataques DDoS</strong></summary>
-					<p>Distributed Denial of Service: Sobrecarga un servidor con tráfico falso, haciendo que el servicio sea inaccesible.</p>
-					<p><strong>Ejemplo:</strong> Un sitio web se vuelve lento o cae debido a un ataque masivo.</p>
-					<p><strong>Prevención:</strong> Usar servicios de protección DDoS y firewalls.</p>
-				</details>
-
-				<details>
-					<summary><strong>Ingeniería Social</strong></summary>
-					<p>Técnicas psicológicas para manipular a las personas y obtener información confidencial.</p>
-					<p><strong>Ejemplos:</strong> Llamadas falsas de soporte técnico o preguntas inocentes en redes sociales.</p>
-					<p><strong>Prevención:</strong> Nunca compartas información personal con extraños y verifica identidades.</p>
-				</details>
-
-				<details>
-					<summary><strong>Ataques Man-in-the-Middle</strong></summary>
-					<p>El atacante intercepta la comunicación entre dos partes sin que se den cuenta.</p>
-					<p><strong>Ejemplo:</strong> En una red Wi-Fi pública, alguien espía tus datos.</p>
-					<p><strong>Prevención:</strong> Usa HTTPS y VPN en redes públicas.</p>
-				</details>
-
-				<details>
-					<summary><strong>Explotación de Vulnerabilidades</strong></summary>
-					<p>Aprovechar fallos en software o hardware para acceder a sistemas.</p>
-					<p><strong>Ejemplo:</strong> Usar un bug en una aplicación para robar datos.</p>
-					<p><strong>Prevención:</strong> Mantén todo actualizado y usa parches de seguridad.</p>
-				</details>
+				<div id="amenazas-content"></div>
 			</details>
 
 			<details class="card fade-in" style="margin-top:14px">
 				<summary><h3>Casos Reales</h3></summary>
-				<ul>
-					<li><strong>WannaCry (2017):</strong> Ransomware que afectó a más de 200,000 computadoras en 150 países.</li>
-					<li><strong>SolarWinds (2020):</strong> Ataque sofisticado que comprometió redes gubernamentales y corporativas.</li>
-					<li><strong>Colonial Pipeline (2021):</strong> Ataque ransomware que interrumpió el suministro de combustible en EE.UU.</li>
+				<ul id="cases-list">
+					<!-- relleno dinámico -->
 				</ul>
 			</details>
 
@@ -191,6 +142,30 @@
 			});
 		});
 		document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+		// load amenazas data
+		async function loadAmenazas(){
+			try{
+				const res=await fetch('/api/amenazas');
+				if(!res.ok) throw new Error('no api');
+				const data=await res.json();
+				const container=document.getElementById('amenazas-content');
+				container.innerHTML='';
+				data.threats.forEach(t=>{
+					const det=document.createElement('details');
+					det.innerHTML=`<summary><strong>${t.name}</strong></summary><p>${t.why}</p>`;
+					container.appendChild(det);
+				});
+				const casesList=document.getElementById('cases-list');
+				if(casesList && data.cases){
+					casesList.innerHTML='';
+					data.cases.forEach(c=>{const li=document.createElement('li');li.innerHTML='<strong>'+c.name+' ('+c.year+')</strong>: '+c.impact;casesList.appendChild(li);});
+				}
+			}catch(e){
+				console.error('failed loading amenazas',e);
+			}
+		}
+		loadAmenazas();
 	</script>
 </body>
 </html>

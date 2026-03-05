@@ -96,6 +96,40 @@ app.get('/api/about', (req, res) => {
   });
 });
 
+// Endpoint para contenido de amenazas
+app.get('/api/amenazas', (req, res) => {
+  res.json({
+    threats: [
+      {name: 'Phishing', why: 'Correos o sitios falsos que piden datos.'},
+      {name: 'Malware', why: 'Software malicioso que daña o espía.'},
+      {name: 'DDoS', why: 'Saturación de servicios con tráfico falso.'},
+      {name: 'Ingeniería social', why: 'Manipulación de personas para obtener información.'},
+      {name: 'Man-in-the-Middle', why: 'Intercepción en redes públicas.'}
+    ],
+    cases: [
+      {year: 2017, name: 'WannaCry', impact: 'Ransomware global'},
+      {year: 2020, name: 'SolarWinds', impact: 'Espionaje a organismos'},
+      {year: 2021, name: 'Colonial Pipeline', impact: 'Corte de suministro'}
+    ]
+  });
+});
+
+// Endpoint para consejos
+app.get('/api/consejos', (req, res) => {
+  res.json({
+    advice: [
+      'No compartas contraseñas ni códigos',
+      'Activa la verificación en dos pasos siempre que puedas',
+      'Actualiza programas y sistema con regularidad',
+      'Utiliza gestores de contraseñas y generadores seguros',
+      'Instala un antivirus y mantenlo activo',
+      'Usa una VPN al conectarte a redes públicas',
+      'Configura copias de seguridad periódicas',
+      'Segmenta redes (separa invitados de dispositivos principales)'
+    ]
+  });
+});
+
 // Rutas para imágenes: actualmente son huecos no funcionales.
 app.get('/api/images/:id', (req, res) => {
   // Hueco: devolver 204 No Content para indicar que aquí se puede subir/servir imágenes luego
