@@ -59,6 +59,43 @@ app.get('/api/advanced', (req, res) => {
   });
 });
 
+// Endpoint para la página "Sobre Nosotros"
+app.get('/api/about', (req, res) => {
+  res.json({
+    company: {
+      name: 'Iberseguridad',
+      description: 'Empresa de formación y consultoría en ciberseguridad con más de 10 años de experiencia. Ofrecemos cursos para estudiantes, profesionales y organizaciones de habla hispana.',
+      customers: ['Institutos educativos', 'PYMEs', 'Entidades públicas', 'Particulares']
+    },
+    services: [
+      'Bootcamps intensivos de 3-5 días',
+      'Cursos semanales de 8 a 12 semanas',
+      'Talleres específicos (redes seguras, análisis de malware, criptografía)',
+      'Programas de certificación corporativa'
+    ],
+    itinerary: [
+      {title: 'Introducción a la ciberseguridad', details: 'Conceptos básicos, amenazas y medidas preventivas.'},
+      {title: 'Seguridad de redes', details: 'Firewalls, VLANs, IDS/IPS y análisis de tráfico.'},
+      {title: 'Desarrollo seguro', details: 'OWASP, validación de entrada y pruebas de penetración básicas.'},
+      {title: 'Criptografía y privacidad', details: 'Cifrado simétrico/asimétrico, hashing y PKI.'},
+      {title: 'Respuesta a incidentes', details: 'Metodología, forense digital y recuperación.'}
+    ],
+    instructors: [
+      {name: 'Gonzalo Pérez', role: 'Analista de seguridad con 15 años en SOC.'},
+      {name: 'Jorge Rodríguez', role: 'Especialista en criptografía aplicada.'},
+      {name: 'María López', role: 'Ingeniera de redes certificada CCNP y CISSP.'},
+      {name: 'Carlos Méndez', role: 'Ethical hacker con OSCP y experiencia en pentesting.'}
+    ],
+    reviews: [
+      {stars: 5, text: 'Excelente curso, instructores muy preparados.', author: 'Instituto Liceo'},
+      {stars: 4, text: 'Muy útil para nuestro equipo de TI.', author: 'Pyme TecnoSol'},
+      {stars: 5, text: 'Contenidos claros y actualizados.', author: 'Universidad Estatal'},
+      {stars: 4, text: 'Recomendado para principiantes y avanzados.', author: 'Colegio Mayor'},
+      {stars: 5, text: 'Los ejercicios prácticos fueron excepcionales.', author: 'Empresa Segura S.A.'}
+    ]
+  });
+});
+
 // Rutas para imágenes: actualmente son huecos no funcionales.
 app.get('/api/images/:id', (req, res) => {
   // Hueco: devolver 204 No Content para indicar que aquí se puede subir/servir imágenes luego

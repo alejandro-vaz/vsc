@@ -1,6 +1,15 @@
 # Página de Ciberseguridad — Frontend + Backend skeleton
 
-Proyecto de ejemplo: sitio con estilo sci‑fi para explicar ciberseguridad a alumnado de 4º ESO, con subpáginas y backend Express mínimo.
+Proyecto de ejemplo: sitio con estilo sci‑fi para explicar ciberseguridad a un público general, con subpáginas y backend Express mínimo.
+
+Este proyecto está pensado para mantenerse bajo control de versiones con Git; incluye un `.gitignore` estándar para Node/VSCode y puedes iniciar un repositorio local con:
+
+```bash
+cd "pagina web"
+git init
+git add .
+git commit -m "inicial" 
+```
 
 Estructura:
 
@@ -31,6 +40,6 @@ Las páginas contienen ahora contenido ampliado:
 * `tools.html` ofrece más herramientas y un pequeño quiz de situación.
 * `advanced.html` incorpora ejercicios de cifrado (César, Vigenère, SHA‑256) y explicaciones de algoritmos modernos como AES y RSA.
 
-Notas para el profesor:
+Notas para el equipo de Iberseguridad:
 - Los endpoints `/api/images/:id` están pensados como puntos donde más tarde puede integrarse un almacenamiento (filesystem, S3, etc.). Actualmente devuelven 204 para indicar hueco.
 - Puede editar los JSON entregados en `server/server.js` para personalizar los textos, listas y rutas de imágenes.

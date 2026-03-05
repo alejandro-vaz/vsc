@@ -38,85 +38,79 @@
 			</div>
 		</header>
 
-		<section class="card">
+		<!-- content will be filled by script -->
+		<section class="card" id="company-section">
 			<h2>Quiénes somos</h2>
-			<p>Iberseguridad es una empresa de formación y consultoría en ciberseguridad con más de 10 años de experiencia. Nuestro objetivo es acercar la seguridad digital a estudiantes, profesionales y organizaciones de habla hispana.</p>
-			<p>Ofrecemos cursos presenciales y en línea, talleres personalizados y asesoría técnica. Vendemos nuestros servicios a institutos educativos, pymes, entidades públicas y particulares interesados en desarrollar habilidades técnicas y conciencia de seguridad.</p>
+			<p id="company-desc"></p>
+			<p id="company-customers"></p>
 		</section>
 
-		<section class="card">
+		<section class="card" id="services-section">
 			<h2>Servicios de formación</h2>
-			<ul>
-				<li>Bootcamps intensivos de 3-5 días</li>
-				<li>Cursos semanales de 8 a 12 semanas</li>
-				<li>Talleres específicos (redes seguras, análisis de malware, criptografía)</li>
-				<li>Programas de certificación corporativa</li>
-			</ul>
+			<ul id="services-list"></ul>
 		</section>
 
-		<section class="card">
+		<section class="card" id="itinerary-section">
 			<h2>Itinerario de cursos</h2>
-			<dl>
-				<dt>Introducción a la ciberseguridad</dt>
-				<dd>Conceptos básicos, amenazas y medidas preventivas.</dd>
-				<dt>Seguridad de redes</dt>
-				<dd>Firewalls, VLANs, IDS/IPS y análisis de tráfico.</dd>
-				<dt>Desarrollo seguro</dt>
-				<dd>OWASP, validación de entrada y pruebas de penetración básicas.</dd>
-				<dt>Criptografía y privacidad</dt>
-				<dd>Cifrado simétrico/asimétrico, hashing y PKI.</dd>
-				<dt>Respuesta a incidentes</dt>
-				<dd>Metodología, forense digital y recuperación.</dd>
-			</dl>
+			<dl id="itinerary-list"></dl>
 		</section>
 
-		<section class="card">
+		<section class="card" id="instructors-section">
 			<h2>Nuestros profesores</h2>
-			<ul>
-				<li>Gonzalo Pérez – Analista de seguridad con 15 años en SOC.</li>
-				<li>Jorge Rodríguez – Especialista en criptografía aplicada.</li>
-				<li>María López – Ingeniera de redes certificada CCNP y CISSP.</li>
-				<li>Carlos Méndez – Ethical hacker con OSCP y experiencia en pentesting.</li>
-			</ul>
+			<ul id="instructors-list"></ul>
 		</section>
 
-		<section class="card">
+		<section class="card" id="reviews-section">
 			<h2>Reseñas de clientes</h2>
-			<div class="carousel" id="reviews">
-				<div class="review active">
-					<p class="stars">★★★★★</p>
-					<p>"Excelente curso, instructores muy preparados." – Instituto Liceo</p>
-				</div>
-				<div class="review">
-					<p class="stars">★★★★☆</p>
-					<p>"Muy útil para nuestro equipo de TI." – Pyme TecnoSol</p>
-				</div>
-				<div class="review">
-					<p class="stars">★★★★★</p>
-					<p>"Contenidos claros y actualizados." – Universidad Estatal</p>
-				</div>
-				<div class="review">
-					<p class="stars">★★★★☆</p>
-					<p>"Recomendado para principiantes y avanzados." – Colegio Mayor</p>
-				</div>
-				<div class="review">
-					<p class="stars">★★★★★</p>
-					<p>"Los ejercicios prácticos fueron excepcionales." – Empresa Segura S.A.</p>
-				</div>
-			</div>
+			<div class="carousel" id="reviews"></div>
 		</section>
 
 	</main>
 
 	<script>
-		// simple carousel rotate every 4s
-		let idx=0;
-		const reviews=document.querySelectorAll('#reviews .review');
-		setInterval(()=>{
-			reviews[idx].classList.remove('active');
-			idx=(idx+1)%reviews.length;
-			reviews[idx].classList.add('active');
-		},4000);
+		async function loadAbout(){
+			try{
+				const res=await fetch('/api/about');
+				if(!res.ok) throw new Error('no api');
+				const data=await res.json();
+				// company
+				document.getElementById('company-desc').textContent = data.company.description;
+				document.getElementById('company-customers').textContent = 'Nuestros clientes: ' + data.company.customers.join(', ') + '.';
+				// services
+				const svcList=document.getElementById('services-list');
+				svcList.innerHTML='';
+				data.services.forEach(s=>{const li=document.createElement('li');li.textContent=s;svcList.appendChild(li);});
+				// itinerary
+				const itin=document.getElementById('itinerary-list');
+				itin.innerHTML='';
+				data.itinerary.forEach(i=>{const dt=document.createElement('dt');dt.textContent=i.title;const dd=document.createElement('dd');dd.textContent=i.details;itin.appendChild(dt);itin.appendChild(dd);});
+				// instructors
+				const ins=document.getElementById('instructors-list');
+				ins.innerHTML='';
+				data.instructors.forEach(p=>{const li=document.createElement('li');li.textContent=p.name+' – '+p.role;ins.appendChild(li);});
+				// reviews carousel
+				const revContainer=document.getElementById('reviews');
+				revContainer.innerHTML='';
+				data.reviews.forEach((r,i)=>{
+					const div=document.createElement('div');div.className='review'+(i===0?' active':'');
+					const stars=document.createElement('p');stars.className='stars';stars.textContent='★'.repeat(r.stars)+ (r.stars<5?'☆'.repeat(5-r.stars):'');
+					const txt=document.createElement('p');txt.textContent='"'+r.text+'" – '+r.author;
+					div.appendChild(stars);div.appendChild(txt);
+					revContainer.appendChild(div);
+				});
+				// start carousel
+				let idx=0;
+				const reviews=document.querySelectorAll('#reviews .review');
+				setInterval(()=>{
+					reviews[idx].classList.remove('active');
+					idx=(idx+1)%reviews.length;
+					reviews[idx].classList.add('active');
+				},4000);
+			}catch(e){
+				console.error('could not load about',e);
+			}
+		}
+		loadAbout();
 	</script>
 </body>
 </html>
