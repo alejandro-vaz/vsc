@@ -6,25 +6,28 @@
 	<title>Ciberseguridad — Prof. Digital (4º ESO)</title>
 	<style>
 		:root{
-			--bg:#070707;
-			--red:#ff2b2b;
-			--muted:#9aa0a6;
-			--panel:#0e0e10;
-			--glass: rgba(255,255,255,0.03);
+			/* base theme colors */
+			--bg:#0a0a0f;           /* slightly cooler dark */
+			--red:#ff3b3b;          /* brighter red */
+			--muted:#a1b0c2;        /* desaturated blue-gray */
+			--panel:#121217;        /* deeper panel background */
+			--glass: rgba(255,255,255,0.05);
+			--accent:#00ffcc;       /* neon turquoise accent */
+			--highlight:#ff66cc;    /* pink highlight for links/buttons */
 		}
-		html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#e6e6e6}
+		html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#f0f0f5}
 		/* animated decorative lines */
 		.lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
-		.line{position:absolute;height:2px;background:linear-gradient(90deg, transparent, var(--red), transparent);opacity:0.12}
+		.line{position:absolute;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);opacity:0.15}
 		.line.x{width:120%;left:-10%;animation:moveX 8s linear infinite}
-		.line.y{height:120%;width:2px;top:-10%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg, transparent, var(--red), transparent);opacity:0.06;animation:moveY 10s linear infinite}
+		.line.y{height:120%;width:2px;top:-10%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg, transparent, var(--accent), transparent);opacity:0.08;animation:moveY 10s linear infinite}
 		@keyframes moveX{0%{transform:translateX(-5%)}50%{transform:translateX(5%)}100%{transform:translateX(-5%)}}
 		@keyframes moveY{0%{transform:translateY(-5%)}50%{transform:translateY(5%)}100%{transform:translateY(-5%)}}
 
-		.wrap{max-width:1100px;margin:40px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,43,43,0.06)}
+		.wrap{max-width:1400px;margin:40px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,43,43,0.06)}
 		header{display:flex;align-items:center;gap:18px}
-		.logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#120000, #300000);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--red);font-size:20px;border:1px solid rgba(255,43,43,0.15)}
-		h1{margin:0;font-size:28px}
+		.logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#330000, #500000);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:20px;border:1px solid rgba(255,59,59,0.25);box-shadow:0 0 8px var(--accent)}
+		h1{margin:0;font-size:28px;color:var(--accent)}
 		p.lead{color:var(--muted);margin-top:6px}
 
 		nav{margin-top:18px;display:flex;gap:10px}
@@ -32,13 +35,18 @@
 		.btn.primary{border-color:var(--red);color:var(--red)}
 
 		.grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
-		.card{background:var(--panel);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+.card{background:var(--panel);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 15px rgba(0,0,0,0.7);margin-bottom:18px}
+			details.card{padding:0;}
+			details.card > div, details.card > ul, details.card > dl{padding:12px 16px}
+			details.card h3, details.card h2{margin:0}
 
 		.section-title{display:flex;justify-content:space-between;align-items:center}
-		.professor{font-style:italic;color:#f2e6e0}
+			h2{color:var(--accent)}
 
-		details summary{cursor:pointer;outline:none;padding:8px;border-radius:8px}
-		details[open] summary{background:linear-gradient(90deg, rgba(255,43,43,0.06), transparent)}
+		details summary{cursor:pointer;outline:none;padding:10px 14px;border-radius:8px;background:var(--panel);display:block;box-shadow:0 2px 8px rgba(0,0,0,0.5);list-style:none;}
+		details summary::before{content:'▸';display:inline-block;margin-right:6px;transition:transform 0.2s;color:var(--highlight)}
+		details[open] summary{background:var(--accent);color:#0a0a0f;box-shadow:0 3px 12px rgba(0,0,0,0.7)}
+		details[open] summary::before{transform:rotate(90deg)}
 
 		/* quiz */
 		.quiz .option{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);margin-top:8px;cursor:pointer}
@@ -47,7 +55,41 @@
 
 		footer{margin-top:18px;color:var(--muted);font-size:13px}
 
-		.placeholder{display:block;width:100%;height:180px;background:linear-gradient(90deg,#0c0c0c,#111111);border-radius:8px;border:1px dashed rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+		.placeholder{display:block;width:100%;height:180px;background:linear-gradient(90deg,#0c0c0c,#111111);border-radius:8px;border:1px dashed rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:var(--muted);box-shadow:0 0 8px var(--accent)}
+
+			/* password tester styles */
+			.pwd-container{width:100%;}
+			.pwd-input{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:#111;color:#eee;box-sizing:border-box}
+			.pwd-bar{width:100%;height:10px;background:#222;border-radius:5px;margin-top:6px;overflow:hidden}
+			.pwd-bar-inner{height:100%;width:0;background:var(--accent);transition:width 0.3s,background 0.3s}
+			.pwd-label{margin-top:8px;color:var(--muted);font-weight:600}
+			.pwd-tips{margin-top:4px;color:var(--highlight);font-size:13px}
+		/* animated decorative lines */
+		/* ... existing styles above ... */
+
+		/* navigation animation */
+		nav .btn{transition:background 0.3s, color 0.3s, transform 0.2s}
+			nav .btn{border-color:rgba(255,255,255,0.1);color:var(--muted)}
+			nav .btn:hover{background:rgba(0,255,204,0.1);color:var(--accent);transform:scale(1.05)}
+			nav .btn.primary{background:var(--accent);color:#0a0a0f;box-shadow:0 0 12px var(--accent)}
+			a{color:var(--highlight);transition:color 0.3s;text-decoration:none}
+			a:hover{color:var(--accent);text-decoration:underline}
+		/* card hover effect */
+		.card{transition:transform 0.3s, box-shadow 0.3s}
+		.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.8);border-color:var(--accent)}
+
+		/* details animation */
+		details{transition:background 0.3s}
+		details[open]{animation:fadeInDetails 0.4s ease}
+		@keyframes fadeInDetails{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+
+		/* scroll fade-in */
+		.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease, transform 0.6s ease}
+		.fade-in.visible{opacity:1;transform:translateY(0)}
+
+		/* quiz option animation */
+		.quiz .option{transition:background 0.3s, transform 0.2s}
+		.quiz .option:hover{transform:scale(1.03);background:rgba(0,255,204,0.1);border-color:var(--accent)}
 
 		/* small responsive */
 		@media(max-width:980px){.grid{grid-template-columns:1fr}}
@@ -63,31 +105,52 @@
 	</div>
 
 	<main class="wrap">
-		<header>
+		<header class="fade-in">
 			<div class="logo">CD</div>
 			<div>
-				<h1>Ciberseguridad — Clase para 4º ESO</h1>
-				<p class="lead">Explicado por Jorge Briñas Vico y Gonzalo de la Viuda Guerra, pero claro y directo para alumnos de la clase de Digitalización.</p>
+				<h1>Ciberseguridad — Iberseguridad</h1>
+				<p class="lead">Contenido desarrollado por Gonzalo (principal) y Jorge (que aclara y escribe más) de la empresa Iberseguridad.</p>
 			</div>
 		</header>
 
 		<nav>
-			<a class="btn" href="index.html">Resumen</a>
+			<a class="btn primary" href="index.html">Resumen</a>
 			<a class="btn" href="tools.html">Herramientas</a>
-			<a class="btn primary" href="advanced.html">Avanzado / Quiz</a>
+			<a class="btn" href="advanced.html">Avanzado / Quiz</a>
+			<a class="btn" href="amenazas.html">Amenazas Comunes</a>
+			<a class="btn" href="consejos.html">Consejos Avanzados</a>
 		</nav>
 
 		<div class="grid">
 			<section>
-				<article class="card" id="content">
+				<details class="card" id="content" open>
 					<div class="section-title">
 						<h2>¿Qué es la ciberseguridad?</h2>
-						<span class="professor">Profes. Dr. Digital</span>
+						<span class="professor">Iberseguridad</span>
 					</div>
-					<p id="intro">Cargando contenido...</p>
+					<p id="intro">Bienvenido: en esta página exploramos los conceptos básicos de la ciberseguridad y cómo protegerse. Lee los apartados siguientes para más detalles.</p>
                     <p>En términos sencillos, la ciberseguridad se ocupa de proteger los dispositivos conectados a internet (ordenadores, móviles, consolas) y la información que almacenan. Al igual que en una ciudad hay policías y cámaras, en el mundo digital existen mecanismos que vigilan y controlan el acceso para que solo las personas autorizadas puedan entrar.</p>
+                    <div class="placeholder fade-in">[Esquema de red / police]</div>
                     <p>Hoy en día nuestros teléfonos guardan fotos, conversaciones y contraseñas. Si alguien logra entrar sin permiso, puede causar daño desde robar identidades hasta bloquear equipos con virus.</p>
-
+                    <div class="placeholder fade-in" style="margin-top:10px">[Imagen de móvil inseguro]</div>
+                    <p>Existen varios ámbitos dentro de la ciberseguridad:</p>
+                    <ul>
+                        <li><strong>Seguridad de red:</strong> proteger el flujo de datos entre dispositivos.</li>
+                        <li><strong>Seguridad de la información:</strong> asegurar que los datos no se divulguen o alteren.</li>
+                        <li><strong>Seguridad en aplicaciones:</strong> evitar que los programas sean manipulados.</li>
+                        <li><strong>Ingeniería social:</strong> técnicas que engañan a las personas para que revelen información.</li>
+                        <li><strong>Criptografía:</strong> uso de códigos para que solo puedan leer los datos los autorizados.</li>
+                        <li><strong>Forense digital:</strong> investigar incidentes y recopilar evidencias tras un ataque.</li>
+                        <li><strong>Seguridad en la nube:</strong> proteger datos almacenados en servicios en línea como Google Drive o Dropbox.</li>
+                        <li><strong>Seguridad IoT:</strong> dispositivos inteligentes como termostatos o cámaras que conectan a internet.</li>
+                    </ul>
+                    <p>Hay muchas profesiones relacionadas: analistas de seguridad, pentesters (hackers éticos), administradores de sistemas, desarrolladores seguros y más. Cualquiera puede empezar aprendiendo conceptos básicos, practicando en simuladores y usando entornos protegidos como máquinas virtuales.</p>
+                    <details>
+                        <summary><strong>Roles en seguridad</strong></summary>
+                        <p>Desde el que configura un firewall en una empresa hasta el que busca vulnerabilidades en aplicaciones. Todos trabajan para detectar y prevenir riesgos.</p>
+                        <p>Los estudiantes pueden iniciarse con cursos en línea, competiciones de CTF (capture the flag) o montando su propio laboratorio en casa.</p>
+                    </details>
+                    
                     <details>
                         <summary><strong>¿Por qué es importante?</strong></summary>
                         <p>La ciberseguridad protege la información y las redes. Sin ella, datos personales y sistemas pueden ser usados por personas malintencionadas. Es como cerrar la puerta de tu casa y poner una alarma.</p>
@@ -104,53 +167,174 @@
                     </details>
 
                     <details>
+                        <summary><strong>Ciberseguridad cotidiana</strong></summary>
+                        <p>En casa y en el instituto:</p>
+                        <ul>
+                            <li>No descargues archivos de sitios dudosos.</li>
+                            <li>Desconfía de mensajes que te piden datos personales.</li>
+                            <li>Configura la privacidad de tus redes sociales y bloquea usuarios extraños.</li>
+                            <li>Pregunta a un adulto antes de conectar dispositivos USB desconocidos.</li>
+                        </ul>
+                    </details>
+
+                    <details>
                         <summary><strong>Amenazas comunes</strong></summary>
                         <ul>
                             <li>Phishing (emails falsos que piden tu contraseña)</li>
                             <li>Malware (programas que dañan o espían tu equipo)</li>
                             <li>Ransomware (secuestran tus archivos y piden dinero)</li>
+                            <li>Man‑in‑the‑Middle (alguien intercepta tu comunicación)</li>
+                            <li>DDoS (trafico masivo que vuelve inaccesible un servicio)</li>
+                        </ul>
+                    </details>
+                    
+                    <details>
+                        <summary><strong>Consejos prácticos</strong></summary>
+                        <ul>
+                            <li>No compartas contraseñas ni códigos</li>
+                            <li>Activa la verificación en dos pasos siempre que puedas</li>
+                            <li>Actualiza programas y sistema con regularidad</li>
+                            <li>Utiliza gestores de contraseñas y generadores seguros</li>
                         </ul>
                     </details>
 
-                    <h3>Recursos del profesor</h3>
-                    <p>Abajo hay huecos para imágenes y materiales que el profesor podrá subir en el backend. Pueden ser gráficos, esquemas de red o ejemplos de contraseñas fuertes.</p>
-				<article class="card" style="margin-top:14px">
-					<h3>Herramientas de ciberseguridad</h3>
+                    <details>
+                        <summary><strong>Ciberseguridad en el futuro</strong></summary>
+                        <p>La ciberseguridad evoluciona rápidamente con nuevas tecnologías como la inteligencia artificial, blockchain y el metaverso. En el futuro, se espera que:</p>
+                        <ul>
+                            <li>La IA ayude a detectar amenazas automáticamente.</li>
+                            <li>La privacidad sea aún más importante con leyes como el RGPD.</li>
+                            <li>Los ataques se vuelvan más sofisticados, usando deepfakes y ataques cuánticos.</li>
+                        </ul>
+                        <p>Es fundamental mantenerse actualizado y aprender continuamente.</p>
+                    </details>
+
+                    <details>
+                        <summary><strong>Medidas de mitigación</strong></summary>
+                        <ul>
+                            <li>Instala un antivirus y mantenlo activo.</li>
+                            <li>Usa una VPN al conectarte a redes públicas.</li>
+                            <li>Configura copias de seguridad periódicas.</li>
+                            <li>Segmenta redes (separa invitados de dispositivos principales).</li>
+                        </ul>
+                    </details>
+                </details>  <!-- cierre del panel "¿Qué es la ciberseguridad?" -->
+
+                    <details class="card" style="margin-top:14px">
+                        <summary><h3>Recursos de Iberseguridad</h3></summary>
+                        <p>Abajo hay huecos para imágenes y materiales que el equipo de Iberseguridad podrá subir en el backend. Pueden ser gráficos, esquemas de red o ejemplos de contraseñas fuertes.</p>
+                        <p>Aquí también se pueden añadir enlaces a vídeos explicativos, fichas didácticas y ejercicios interactivos para que los usuarios practiquen.</p>
+                    </details>
+				<details class="card fade-in" style="margin-top:14px">
+					<summary><h3>Herramientas de ciberseguridad</h3></summary>
 					<ul id="tools-list">
 						<li>Cargando...</li>
 					</ul>
-				</article>
-                <article class="card" style="margin-top:14px">
-                    <h3>Prueba de contraseña</h3>
-                    <p>Escribe una contraseña y evalúa su fuerza. Usa letras, números y símbolos.</p>
-                    <input type="password" id="pwd" placeholder="Introduce contraseña" style="width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:#111;color:#eee">
-                    <div id="pwd-strength" style="margin-top:8px;color:var(--muted)"></div>
-                </article>
+				</details>
+
+                    <details class="card fade-in" style="margin-top:14px">
+                        <summary><h3>Incidentes famosos</h3></summary>
+                        <ul>
+                            <li>2007 – Estallido de ataques DDoS contra Estonia, paralizando servicios gubernamentales.</li>
+                            <li>2013 – Filtración de <em>Target</em> que afectó a 40 millones de tarjetas de crédito.</li>
+                            <li>2017 – WannaCry, ransomware que afectó a hospitales y empresas de todo el mundo.</li>
+                            <li>2018 – Facebook-Cambridge Analytica: uso indebido de datos personales de millones de usuarios.</li>
+                            <li>2022 – Vulnerabilidad Log4Shell en Java: millones de servidores potencialmente comprometidos.</li>
+                        </ul>
+                        <p>Estos casos muestran cómo incluso errores pequeños pueden tener impacto global.</p>
+                    </details>
+                <details class="card" style="margin-top:14px">
+                    <summary><h3>Prueba de contraseña</h3></summary>
+                    <p>Escribe una contraseña y evalúa su fuerza; la barra indica visualmente cuán resistente es.</p>
+                    <div class="pwd-container">
+                        <input class="pwd-input" type="password" id="pwd" placeholder="Introduce contraseña">
+                        <div class="pwd-bar"><div class="pwd-bar-inner"></div></div>
+                    </div>
+                    <div id="pwd-strength" class="pwd-label"></div>
+                    <p class="pwd-tips">Consejo: mezcla mayúsculas, minúsculas, números y símbolos para mayor seguridad.</p>
+                </details>
+
+                <details class="card" style="margin-top:14px">
+                    <summary><h3>Glosario breve</h3></summary>
+                    <dl>
+                        <dt>Phishing</dt><dd>Engaño por mail o web para robar credenciales.</dd>
+                        <dt>Malware</dt><dd>Software malicioso: virus, troyanos, spyware.</dd>
+                        <dt>Ransomware</dt><dd>Secuestra archivos y exige rescate.</dd>
+                        <dt>Firewall</dt><dd>Filtro que controla el tráfico entre redes.</dd>
+                        <dt>VPN</dt><dd>Red privada virtual que cifra la conexión.</dd>
+                        <dt>IDS/IPS</dt><dd>Sistemas de detección y prevención de intrusos.</dd>
+                        <dt>Zero‑day</dt><dd>Vulnerabilidad desconocida sin parche.</dd>
+                        <dt>Botnet</dt><dd>Red de dispositivos comprometidos controlada por un atacante.</dd>
+                    </dl>
+                </details>
+
+                <details class="card" style="margin-top:14px">
+                    <summary><h3>Historia rápida</h3></summary>
+                    <ul>
+                        <li>1969 – ARPANET, nacimiento de Internet y primeras preocupaciones de seguridad.</li>
+                        <li>1988 – Gusano Morris, primer incidente a gran escala en la red.</li>
+                        <li>1990s – Aparición de antivirus comerciales y firewalls personales.</li>
+                        <li>2000s – Expansión de ataques DDoS, phishing y robo de datos.</li>
+                        <li>2010s – Ransomware y vigilancia masiva; cifrado se vuelve estándar.</li>
+                        <li>2020s – IoT inseguro y deepfakes complican el panorama.</li>
+                    </ul>
+                </details>
+
+                <details class="card" style="margin-top:14px">
+                    <summary><h3>Enlaces útiles</h3></summary>
+                    <ul>
+                        <li><a href="https://www.incibe.es" target="_blank" style="color:var(--accent)">INCIBE (seguridad en España)</a></li>
+                        <li><a href="https://es.wikipedia.org/wiki/Ciberseguridad" target="_blank" style="color:var(--accent)">Wiki: Ciberseguridad</a></li>
+                        <li><a href="https://www.cisa.gov" target="_blank" style="color:var(--accent)">CISA (agencia de EEUU)</a></li>
+                        <li><a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe – laboratorios prácticos</a></li>
+                        <li><a href="https://www.kaspersky.es/resource-center" target="_blank" style="color:var(--accent)">Kaspersky Resource Center</a></li>
+                    </ul>
+                </details>
+
+                <details class="card" style="margin-top:14px">
+                    <summary><h3>Carreras y certificaciones</h3></summary>
+                    <ul>
+                        <li>CEH – Certified Ethical Hacker</li>
+                        <li>CompTIA Security+</li>
+                        <li>CISSP – Certified Information Systems Security Professional</li>
+                        <li>OSCP – Offensive Security Certified Professional</li>
+                    </ul>
+                    <p>Existen muchas rutas de aprendizaje para quien quiera dedicarse profesionalmente al sector.</p>
+                </details>
 			</section>
 
 			<aside>
-				<div class="card">
-					<h3>Quiz Rápido</h3>
-					<div class="quiz" id="quiz">
-						<p><strong>¿Qué es una contraseña segura?</strong></p>
-						<div class="option" data-correct="false">Nombre del usuario</div>
-						<div class="option" data-correct="true">Una combinación larga y única</div>
-						<div class="option" data-correct="false">La fecha de nacimiento</div>
-					</div>
-					<div id="quiz-result" style="margin-top:10px;color:var(--muted)"></div>
+				<details class="card fade-in">
+				<summary><h3>Quiz Rápido</h3></summary>
+				<div class="quiz" id="quiz">
+					<p><strong>¿Qué es una contraseña segura?</strong></p>
+					<div class="option" data-correct="false">Nombre del usuario</div>
+					<div class="option" data-correct="true">Una combinación larga y única</div>
+					<div class="option" data-correct="false">La fecha de nacimiento</div>
 				</div>
+				<div id="quiz-result" style="margin-top:10px;color:var(--muted)"></div>
+			</details>
 
-				<div class="card" style="margin-top:12px">
-					<h4>Interactividad</h4>
+				<details class="card fade-in" style="margin-top:12px">
+					<summary><h4>Interactividad</h4></summary>
 					<p>Pulsa los botones arriba para navegar a secciones o inicia el quiz.</p>
 					<button class="btn" id="btn-fetch">Recargar contenido desde backend</button>
-				</div>
+				</details>
+
+                <details class="card fade-in" style="margin-top:12px">
+                    <summary><h4>Consejos rápidos</h4></summary>
+                    <ul>
+                        <li>No abras archivos adjuntos de remitentes desconocidos.</li>
+                        <li>Revisa la URL antes de iniciar sesión en un sitio.</li>
+                        <li>Usa redes Wi‑Fi seguras y evita las públicas sin VPN.</li>
+                        <li>Instala solo apps de fuentes oficiales.</li>
+                        <li>Cambia tus contraseñas cada cierto tiempo.</li>
+                        <li>Pregunta a un adulto si algo te resulte extraño.</li>
+                    </ul>
+                </details>
 			</aside>
 		</div>
 
-		<footer>
-			<div>Creado con estilo sci‑fi — colores negros y toques rojos.</div>
-		</footer>
 	</main>
 
 	<script>
@@ -172,20 +356,29 @@
 
 		document.getElementById('btn-fetch').addEventListener('click',loadContent);
 
-		// quiz logic
-		document.querySelectorAll('.quiz .option').forEach(opt=>{
-			opt.addEventListener('click',()=>{
-				const correct = opt.dataset.correct === 'true';
-				document.querySelectorAll('.quiz .option').forEach(o=>o.classList.remove('correct','wrong'));
-				if(correct){opt.classList.add('correct');document.getElementById('quiz-result').textContent='¡Correcto! Una contraseña segura debe ser larga, única y difícil de adivinar.'}
-				else{opt.classList.add('wrong');document.getElementById('quiz-result').textContent='No exactamente — esa no es una buena práctica. Piensa en combinaciones largas y únicas.'}
-			})
-		})
+		// quiz and interactivity logic
+		function attachQuizHandlers(container){
+			container.querySelectorAll('.option').forEach(opt=>{
+				opt.addEventListener('click',()=>{
+					const correct = opt.dataset.correct === 'true';
+					container.querySelectorAll('.option').forEach(o=>o.classList.remove('correct','wrong'));
+					if(correct){
+						opt.classList.add('correct');
+						document.getElementById('quiz-result').textContent = '¡Bien! ' + (container===document.getElementById('quiz') ?
+							'Una contraseña segura debe ser larga, única y difícil de adivinar.' :
+							'Un firewall filtra el tráfico entre redes.');
+					} else {
+						opt.classList.add('wrong');
+						document.getElementById('quiz-result').textContent = 'No exactamente — esa no es una buena práctica.';
+					}
+				});
+			});
+		}
 
 		// Cargar contenido al inicio
 		loadContent();
-+
-		// password strength meter
+
+		// password strength meter with visual bar
 		document.getElementById('pwd').addEventListener('input', (e) => {
 			const pwd = e.target.value;
 			let score = 0;
@@ -194,8 +387,55 @@
 			if(/[0-9]/.test(pwd)) score += 1;
 			if(/[^A-Za-z0-9]/.test(pwd)) score += 1;
 			const labels = ['Muy débil','Débil','Media','Fuerte','Muy fuerte'];
-			document.getElementById('pwd-strength').textContent = labels[score] || '';
+			const colors = ['#ff4444','#ff8844','#cccc00','#88ff44','#44ffcc'];
+			const pct = (score/4)*100;
+			const barInner = document.querySelector('.pwd-bar-inner');
+			barInner.style.width = pct + '%';
+			barInner.style.background = colors[score] || '#444';
+			const labelEl = document.getElementById('pwd-strength');
+			labelEl.textContent = labels[score] || '';
+			labelEl.style.color = colors[score] || '#a1b0c2';
 		});
+
+		// scroll reveal animations (with fallback if IntersectionObserver missing)
+		function setupScrollReveal(){
+			const elements = document.querySelectorAll('.fade-in');
+			if(!('IntersectionObserver' in window)){
+				// no support: just make everything visible
+				elements.forEach(el=>{
+					el.classList.add('visible');
+					el.style.visibility='visible';
+				});
+				return;
+			}
+			const observer = new IntersectionObserver(entries=>{
+				entries.forEach(e=>{
+					if(e.isIntersecting){
+						e.target.classList.add('visible');
+						e.target.style.visibility='visible';
+						observer.unobserve(e.target);
+					}
+				});
+			},{threshold:0.2});
+			elements.forEach(el=>{
+				el.style.visibility='hidden';
+				observer.observe(el);
+			});
+		}
+		setupScrollReveal();
+
+		// insert additional quiz after initial one
+		const quiz2 = document.createElement('div');
+		quiz2.className = 'quiz fade-in';
+		quiz2.innerHTML = `
+			<p><strong>¿Qué es un firewall?</strong></p>
+			<div class="option" data-correct="true">Un filtro de tráfico entre redes</div>
+			<div class="option" data-correct="false">Un tipo de malware</div>
+			<div class="option" data-correct="false">Un programa de edición de fotos</div>
+		`;
+		document.getElementById('quiz').after(quiz2);
+		attachQuizHandlers(document.getElementById('quiz'));
+		attachQuizHandlers(quiz2);
 	</script>
 </body>
 </html>

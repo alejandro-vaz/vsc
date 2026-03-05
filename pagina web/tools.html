@@ -5,31 +5,60 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Herramientas — Ciberseguridad (4º ESO)</title>
   <style>
-    :root{--bg:#070707;--red:#ff2b2b;--muted:#9aa0a6;--panel:#0e0e10}
-    html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#e6e6e6}
-    .wrap{max-width:1100px;margin:40px auto;padding:28px;border-radius:12px}
+    :root{--bg:#0a0a0f;--red:#ff3b3b;--muted:#a1b0c2;--panel:#121217;--accent:#00ffcc;--highlight:#ff66cc}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#f0f0f5}
+    h2{color:var(--accent)}
+    .wrap{max-width:1400px;margin:40px auto;padding:28px;border-radius:12px}
     header{display:flex;align-items:center;gap:18px}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#120000,#300000);display:flex;align-items:center;justify-content:center;color:var(--red);font-weight:700}
-    h1{margin:0}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:10px;border:1px solid rgba(255,43,43,0.06);margin-top:16px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#330000,#500000);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;box-shadow:0 0 6px var(--accent)}
+    h1{margin:0;color:var(--accent)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:10px;border:1px solid rgba(255,59,59,0.08);margin-top:16px;transition:transform 0.3s,box-shadow 0.3s;box-shadow:0 3px 12px rgba(0,0,0,0.6)}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.8);border-color:var(--accent)}
     .tools-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-    .tool{background:#0c0c0c;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    .tool{background:#0c0c0c;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);transition:transform 0.2s,background 0.3s}
+    .tool:hover{transform:scale(1.04);background:rgba(0,255,204,0.1);border-color:var(--accent);box-shadow:0 0 6px var(--accent)}
     .interactive{margin-top:14px}
-    a.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);color:var(--muted);text-decoration:none}
+    a.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);color:var(--muted);text-decoration:none;transition:background 0.3s,transform 0.2s,font-weight:600}
+    a{color:var(--highlight);transition:color 0.3s;text-decoration:none}
+    a:hover{color:var(--accent);text-decoration:underline}
+    a.btn:hover{background:rgba(0,255,204,0.2);transform:scale(1.05);color:var(--accent);border-color:var(--accent)}
     .nav{margin-top:12px}
+    /* animated decorative lines */
+    .lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
+    .line{position:absolute;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);opacity:0.15}
+    .line.x{width:120%;left:-10%;animation:moveX 8s linear infinite}
+    .line.y{height:120%;width:2px;top:-10%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg, transparent, var(--accent), transparent);opacity:0.08;animation:moveY 10s linear infinite}
+    @keyframes moveX{0%{transform:translateX(-5%)}50%{transform:translateX(5%)}100%{transform:translateX(-5%)}}
+    @keyframes moveY{0%{transform:translateY(-5%)}50%{transform:translateY(5%)}100%{transform:translateY(-5%)}}
+
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease, transform 0.6s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body>
+  <div class="lines" aria-hidden="true">
+    <div class="line x" style="top:10%"></div>
+    <div class="line x" style="top:30%;animation-duration:12s;opacity:0.08"></div>
+    <div class="line x" style="top:60%;animation-duration:9s;opacity:0.06"></div>
+    <div class="line y" style="left:20%"></div>
+    <div class="line y" style="left:80%;animation-duration:14s;opacity:0.04"></div>
+  </div>
   <main class="wrap">
-    <header>
+    <header class="fade-in">
       <div class="logo">CD</div>
       <div>
         <h1>Herramientas de Ciberseguridad</h1>
-        <div class="nav"><a class="btn" href="index.html">Volver</a> <a class="btn" href="advanced.html">Avanzado</a></div>
+        <nav style="margin-top:10px;display:flex;gap:10px">
+          <a class="btn" href="index.html">Resumen</a>
+          <a class="btn primary" href="tools.html">Herramientas</a>
+          <a class="btn" href="advanced.html">Avanzado / Quiz</a>
+          <a class="btn" href="amenazas.html">Amenazas Comunes</a>
+          <a class="btn" href="consejos.html">Consejos Avanzados</a>
+        </nav>
       </div>
     </header>
 
-    <section class="card">
+    <section class="card fade-in">
       <h2>Resumen para 4º ESO</h2>
       <p>En esta página ampliamos las herramientas útiles, con ejemplos y una pequeña interacción para entender cuál usar según la situación.</p>
 
@@ -40,6 +69,8 @@
         <div class="tool"><strong>Gestores de contraseñas</strong><p>Generan y guardan contraseñas únicas y complejas.</p></div>
         <div class="tool"><strong>VPN / Cifrado</strong><p>Oculta tu actividad y protege la conexión, especialmente en redes públicas.</p></div>
         <div class="tool"><strong>Actualizaciones</strong><p>Instalar parches cierra vulnerabilidades conocidas.</p></div>
+        <div class="tool"><strong>Escáner de vulnerabilidades</strong><p>Busca fallos en sistemas y aplicaciones antes de que sean explotados.</p></div>
+        <div class="tool"><strong>Bloqueador de scripts</strong><p>Evita ejecuciones no autorizadas en el navegador, útil contra exploit kits.</p></div>
       </div>
 
       <div class="interactive">
@@ -48,9 +79,10 @@
         <select id="scenario">
           <option value="malware">Crees que tienes malware</option>
           <option value="acceso">Alguien intenta entrar en la red</option>
+          <option value="intrusion">Detectas actividad sospechosa en la red</option>
           <option value="perdida">Has perdido archivos importantes</option>
           <option value="contraseña">No recuerdo mis contraseñas</option>
-          <option value="wifi">Estás en una wifi pública</option>
+          <option value="wifi">Estás en una Wi‑Fi pública</option>
           <option value="sinparche">Tu ordenador pide reiniciar por actualización</option>
         </select>
         <button id="btn-check">Sugerir</button>
@@ -60,12 +92,15 @@
         <p>¿Qué herramienta usarías para navegar sin que te espíen en una cafetería?</p>
         <button class="btn" id="quiz-vpn">VPN</button> <button class="btn" id="quiz-firewall">Firewall</button>
         <div id="quiz-ans" style="margin-top:10px;color:var(--muted)"></div>
+        <p style="margin-top:16px">¿Cuál ayuda a detectar intrusos en tu red?</p>
+        <button class="btn" id="quiz-ids">IDS/IPS</button> <button class="btn" id="quiz-ad">Ad blocker</button>
+        <div id="quiz-ans2" style="margin-top:10px;color:var(--muted)"></div>
       </div>
     </section>
 
-    <section class="card">
+    <section class="card fade-in">
       <h3>Contenido docente (huecos)</h3>
-      <p>Aquí el profesor puede subir guías, imágenes o ejercicios mediante el backend. Actualmente son huecos.</p>
+      <p>Aquí el equipo de Iberseguridad puede subir guías, imágenes o ejercicios mediante el backend. Actualmente son huecos.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
         <div style="height:140px;background:#0b0b0b;border:1px dashed rgba(255,255,255,0.03);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">Imagen guía 1 (hueco)</div>
         <div style="height:140px;background:#0b0b0b;border:1px dashed rgba(255,255,255,0.03);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">Imagen guía 2 (hueco)</div>
@@ -81,7 +116,8 @@
         'acceso':'Revisa el firewall y cambia contraseñas; habilita 2FA si es posible.',
         'perdida':'Restaura desde backup si existe; considera usar software de recuperación si es local.',
         'contraseña':'Usa un gestor de contraseñas y habilita verificación en dos pasos.',
-        'wifi':'Conecta mediante una VPN y evita redes abiertas sin cifrado.',
+        'wifi':'Conecta mediante una VPN y evita redes Wi‑Fi abiertas sin cifrado.',
+        'intrusion':'Revisa logs e instala o activa un IDS/IPS; cambia contraseñas administrativas.'
         'sinparche':'Acepta la actualización e instala los parches; no lo dejes para más tarde.'
       };
       document.getElementById('suggestion').textContent = map[v] || '';
@@ -92,6 +128,29 @@
     document.getElementById('quiz-firewall').addEventListener('click',()=>{
       document.getElementById('quiz-ans').textContent='No exactamente. Un firewall controla el tráfico, pero una VPN cifra tu conexión.';
     });
+    document.getElementById('quiz-ids').addEventListener('click',()=>{
+      document.getElementById('quiz-ans2').textContent='Correcto, un IDS/IPS detecta y (a veces) bloquea intrusiones.';
+    });
+    document.getElementById('quiz-ad').addEventListener('click',()=>{
+      document.getElementById('quiz-ans2').textContent='No; un bloqueador de anuncios no monitorea tu red.';
+    });
+
+    // scroll reveal for this page
+    (function(){
+      const observer = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            e.target.style.visibility='visible';
+            observer.unobserve(e.target);
+          }
+        });
+      },{threshold:0.2});
+      document.querySelectorAll('.fade-in').forEach(el=>{
+        el.style.visibility='hidden';
+        observer.observe(el);
+      });
+    })();
   </script>
 </body>
 </html>
