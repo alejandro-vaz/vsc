@@ -1,0 +1,14 @@
+{
+  "name": "pagina-ciberseguridad",
+  "version": "1.0.0",
+  "description": "Frontend sci-fi y backend skeleton para una clase de ciberseguridad (4º ESO)",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "author": "Iberseguridad",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

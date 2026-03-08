@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Avanzado — Ciberseguridad</title>
+  <style>
+    :root{--bg:#0a0a0f;--red:#ff3b3b;--muted:#a1b0c2;--accent:#00ffcc;--highlight:#ff66cc}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#f0f0f5}
+    h1{color:var(--accent)}
+    .wrap{max-width:1400px;margin:40px auto;padding:28px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:10px;border:1px solid rgba(255,59,59,0.08);margin-top:16px;transition:transform 0.3s,box-shadow 0.3s;box-shadow:0 3px 12px rgba(0,0,0,0.6)}
+    .card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.8);border-color:var(--accent)}
+    a.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);color:var(--muted);text-decoration:none;transition:background 0.3s,transform 0.2s}
+    a.btn:hover{background:rgba(0,255,204,0.2);transform:scale(1.05);color:var(--accent);border-color:var(--accent)}
+    a{color:var(--highlight);transition:color 0.3s;text-decoration:none}
+    a:hover{color:var(--accent);text-decoration:underline}
+    h2{color:var(--accent)}
+    .fade-in{opacity:1;transform:translateY(0);transition:opacity 0.6s ease, transform 0.6s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+    /* animated lines */
+    .lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
+    .line{position:absolute;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);opacity:0.15}
+    .line.x{width:120%;left:-10%;animation:moveX 8s linear infinite}
+    .line.y{height:120%;width:2px;top:-10%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg, transparent, var(--accent), transparent);opacity:0.08;animation:moveY 10s linear infinite}
+    @keyframes moveX{0%{transform:translateX(-5%)}50%{transform:translateX(5%)}100%{transform:translateX(-5%)}}
+    @keyframes moveY{0%{transform:translateY(-5%)}50%{transform:translateY(5%)}100%{transform:translateY(-5%)}}
+  </style>
+</head>
+<body>
+  <div class="lines" aria-hidden="true">
+    <div class="line x" style="top:10%"></div>
+    <div class="line x" style="top:30%;animation-duration:12s;opacity:0.08"></div>
+    <div class="line x" style="top:60%;animation-duration:9s;opacity:0.06"></div>
+    <div class="line y" style="left:20%"></div>
+    <div class="line y" style="left:80%;animation-duration:14s;opacity:0.04"></div>
+  </div>
+  <main class="wrap">
+    <header class="fade-in" style="display:flex;gap:18px;align-items:center">
+      <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#330000,#500000);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;box-shadow:0 0 6px var(--accent)">CD</div>
+      <div>
+        <h1>Ciberseguridad — Nivel Avanzado</h1>
+        <nav style="margin-top:10px;display:flex;gap:10px">
+          <a class="btn" href="index.html">Resumen</a>
+          <a class="btn" href="tools.html">Herramientas</a>
+          <a class="btn primary" href="advanced.html">Avanzado / Quiz</a>
+          <a class="btn" href="amenazas.html">Amenazas Comunes</a>
+          <a class="btn" href="consejos.html">Consejos Avanzados</a>
+          <a class="btn" href="about.html">Sobre Nosotros</a>
+        </nav>
+      </div>
+    </header>
+
+    <div id="api-advanced"></div>
+
+    <section class="card fade-in">
+      <h2>Modelos de amenaza (versión general)</h2>
+      <p>Un modelo de amenaza ayuda a entender quién querría atacar, por qué y cómo. Para 4º ESO lo explicamos con ejemplos: redes sociales, dispositivos móviles y equipos del instituto.</p>
+      <p>Por ejemplo, si una persona publica fotos personales en una red pública, un atacante podría utilizar ingeniería social para obtener información y suplantar su identidad. Identificar estos riesgos es el primer paso para mitigarlos.</p>
+      <details>
+        <summary>Componentes</summary>
+        <ul>
+          <li>Actores: quién ataca (curiosos, ciberdelincuentes, competidores).</li>
+          <li>Activos: qué proteger (datos personales, trabajos, accesos).</li>
+          <li>Vectores: cómo atacan (phishing, malware, contraseñas débiles).</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Criptografía básica</h3>
+      <p>Explicamos con analogías y un pequeño ejercicio interactivo sobre cifrado César.</p>
+      <label>Texto: <input id="plain" value="hola mundo"></label>
+      <label>Desplazamiento: <input id="shift" type="number" value="3" style="width:60px"></label>
+      <button id="enc">Cifrar</button>
+      <div id="out" style="margin-top:10px;color:var(--muted)"></div>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Cifrado Vigenère</h3>
+      <p>Un paso más: el Vigenère usa una palabra clave repetida para desplazar cada letra.</p>
+      <label>Texto: <input id="vig-plain" value="hola mundo" style="width:100%"></label><br>
+      <label>Clave: <input id="vig-key" value="clave"></label>
+      <button id="vig-enc">Cifrar Vigenère</button>
+      <div id="vig-out" style="margin-top:10px;color:var(--muted)"></div>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Hash SHA-256</h3>
+      <p>Las funciones de hash generan una "huella" fija de cualquier texto; es unidireccional.</p>
+      <label>Texto: <input id="hash-input" style="width:100%" value="hola"></label>
+      <button id="hash-btn">Calcular SHA-256</button>
+      <div id="hash-out" style="margin-top:10px;color:var(--muted);word-break:break-all"></div>
+      <p>Usado hoy en contraseñas, integridad y criptomonedas.</p>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Cifrado moderno (teoría)</h3>
+      <p><strong>AES</strong>: algoritmo simétrico que cifra datos en bloques; es el estándar para proteger la mayoría de la comunicación en internet (HTTPS, Wi‑Fi).</p>
+      <p><strong>RSA</strong>: usa clave pública/privada (asimétrico); se utiliza para intercambiar llaves de forma segura y firmar digitalmente.</p>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Seguridad y inteligencia artificial</h3>
+      <p>La IA se usa tanto para defender como para atacar: sistemas de detección de anomalías, filtrado de spam y generación de phishing automatizado.</p>
+      <p>Es importante entender que los modelos pueden ser manipulados (ataques adversarios) y que la ética de los datos es fundamental.</p>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Ataques cuánticos (concepto)</h3>
+      <p>Los ordenadores cuánticos podrían romper algoritmos como RSA en el futuro. Por eso se desarrolla la <em>criptografía post-cuántica</em>, con esquemas resistentes a dichos ataques.</p>
+      <p>Para 4º ESO, basta con saber que la tecnología avanza rápido y obliga a cambiar métodos de protección.</p>
+    </section>
+
+    <section class="card fade-in">
+      <h3>Tópicos para futuros estudios</h3>
+      <ul>
+        <li>Autenticación multifactor</li>
+        <li>Seguridad en aplicaciones web (OWASP Top 10)</li>
+        <li>Introducción a la seguridad ofensiva y defensiva</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    function caesar(str, shift){
+      return str.split('').map(c=>{
+        const a='a'.charCodeAt(0), z='z'.charCodeAt(0);
+        const A='A'.charCodeAt(0), Z='Z'.charCodeAt(0);
+        const code = c.charCodeAt(0);
+        if(code>=a && code<=z) return String.fromCharCode((code-a+shift+26)%26 + a);
+        if(code>=A && code<=Z) return String.fromCharCode((code-A+shift+26)%26 + A);
+        return c;
+      }).join('');
+    }
+    document.getElementById('enc').addEventListener('click',()=>{
+      const t = document.getElementById('plain').value || '';
+      const s = parseInt(document.getElementById('shift').value||0,10);
+      document.getElementById('out').textContent = 'Cifrado César: ' + caesar(t,s);
+    });
+    // Vigenere
+    function vigenere(text,key){
+      let out='';
+      let ki=0;
+      for(let c of text){
+        const A='A'.charCodeAt(0), Z='Z'.charCodeAt(0);
+        const a='a'.charCodeAt(0), z='z'.charCodeAt(0);
+        const code=c.charCodeAt(0);
+        const kcode = key[ki % key.length].toLowerCase().charCodeAt(0) - a;
+        if(code>=a && code<=z){out+=String.fromCharCode((code-a+kcode)%26+a);ki++;}
+        else if(code>=A && code<=Z){out+=String.fromCharCode((code-A+kcode)%26+A);ki++;}
+        else {out+=c;}
+      }
+      return out;
+    }
+    document.getElementById('vig-enc').addEventListener('click',()=>{
+      const t = document.getElementById('vig-plain').value || '';
+      const k = document.getElementById('vig-key').value || '';
+      document.getElementById('vig-out').textContent = 'Cifrado Vigenère: ' + vigenere(t,k);
+    });
+    // SHA-256 using Web Crypto
+    async function sha256(str){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+    document.getElementById('hash-btn').addEventListener('click', async ()=>{
+      const t = document.getElementById('hash-input').value || '';
+      document.getElementById('hash-out').textContent = await sha256(t);
+    });
+
+    // scroll reveal
+    (function(){
+      const observer = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            e.target.style.visibility='visible';
+            observer.unobserve(e.target);
+          }
+        });
+      },{threshold:0.0});  // Cambiado a 0.0 para que se active incluso si es mínimo visible
+      document.querySelectorAll('.fade-in').forEach(el=>{
+        // Quitar visibility:hidden para que se vea inicialmente
+        // el.style.visibility='hidden';
+        observer.observe(el);
+      });
+      // Forzar visible inmediatamente para evitar problemas
+      setTimeout(() => {
+        document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+      }, 100);
+    })();
+
+    // load advanced topics from backend
+    async function loadAdvanced(){
+      try{
+        const res = await fetch('/api/advanced');
+        if(!res.ok) throw new Error('no api');
+        const data = await res.json();
+        const container = document.getElementById('api-advanced');
+        data.topics.forEach(t=>{
+          const sec=document.createElement('section');
+          sec.className='card fade-in';
+          sec.innerHTML=`<h2>${t.topic}</h2><p>${t.desc}</p>`;
+          container.appendChild(sec);
+        });
+      }catch(e){
+        console.error('failed advanced fetch',e);
+        const container = document.getElementById('api-advanced');
+        container.innerHTML = '<section class="card fade-in"><h2>Error</h2><p>No se pudo cargar el contenido avanzado. Verifica que el servidor esté ejecutándose.</p></section>';
+      }
+    }
+    loadAdvanced();
+  </script>
+</body>
+</html>

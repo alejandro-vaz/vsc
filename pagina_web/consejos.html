@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Consejos Avanzados — Ciberseguridad</title>
+	<style>
+		:root{
+			--bg:#0a0a0f;
+			--red:#ff3b3b;
+			--muted:#a1b0c2;
+			--panel:#121217;
+			--glass: rgba(255,255,255,0.05);
+			--accent:#00ffcc;
+			--highlight:#ff66cc;
+		}
+		html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#f0f0f5}
+		/* animated decorative lines */
+		.lines{position:fixed;inset:0;pointer-events:none;overflow:hidden;}
+		.line{position:absolute;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);opacity:0.15}
+		.line.x{width:120%;left:-10%;animation:moveX 8s linear infinite}
+		.line.y{height:120%;width:2px;top:-10%;left:50%;transform:translateX(-50%);background:linear-gradient(180deg, transparent, var(--accent), transparent);opacity:0.08;animation:moveY 10s linear infinite}
+		@keyframes moveX{0%{transform:translateX(-5%)}50%{transform:translateX(5%)}100%{transform:translateX(-5%)}}
+		@keyframes moveY{0%{transform:translateY(-5%)}50%{transform:translateY(5%)}100%{transform:translateY(-5%)}}
+
+		.wrap{max-width:1400px;margin:40px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,43,43,0.06)}
+		header{display:flex;align-items:center;gap:18px}
+		.logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#330000, #500000);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:20px;border:1px solid rgba(255,59,59,0.25);box-shadow:0 0 8px var(--accent)}
+		h1{margin:0;font-size:28px;color:var(--accent)}
+		p.lead{color:var(--muted);margin-top:6px}
+
+		nav{margin-top:18px;display:flex;gap:10px}
+		.btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
+		.btn.primary{border-color:var(--red);color:var(--red)}
+
+		.card{background:var(--panel);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 15px rgba(0,0,0,0.7);margin-bottom:18px}
+		details.card{padding:0;}
+		details.card > div, details.card > ul, details.card > dl{padding:12px 16px}
+		details.card h3, details.card h2{margin:0}
+
+		.section-title{display:flex;justify-content:space-between;align-items:center}
+			h2{color:var(--accent)}
+
+		details summary{cursor:pointer;outline:none;padding:10px 14px;border-radius:8px;background:var(--panel);display:block;box-shadow:0 2px 8px rgba(0,0,0,0.5);list-style:none;}
+		details summary::before{content:'▸';display:inline-block;margin-right:6px;transition:transform 0.2s;color:var(--highlight)}
+		details[open] summary{background:var(--accent);color:#0a0a0f;box-shadow:0 3px 12px rgba(0,0,0,0.7)}
+		details[open] summary::before{transform:rotate(90deg)}
+
+		footer{margin-top:18px;color:var(--muted);font-size:13px}
+
+		.placeholder{display:block;width:100%;height:180px;background:linear-gradient(90deg,#0c0c0c,#111111);border-radius:8px;border:1px dashed rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:var(--muted);box-shadow:0 0 8px var(--accent)}
+
+		/* navigation animation */
+		nav .btn{transition:background 0.3s, color 0.3s, transform 0.2s}
+			nav .btn{border-color:rgba(255,255,255,0.1);color:var(--muted)}
+			nav .btn:hover{background:rgba(0,255,204,0.1);color:var(--accent);transform:scale(1.05)}
+			nav .btn.primary{background:var(--accent);color:#0a0a0f;box-shadow:0 0 12px var(--accent)}
+			a{color:var(--highlight);transition:color 0.3s;text-decoration:none}
+			a:hover{color:var(--accent);text-decoration:underline}
+		/* card hover effect */
+		.card{transition:transform 0.3s, box-shadow 0.3s}
+		.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.8);border-color:var(--accent)}
+
+		/* details animation */
+		details{transition:background 0.3s}
+		details[open]{animation:fadeInDetails 0.4s ease}
+		@keyframes fadeInDetails{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+
+		/* scroll fade-in */
+		.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease, transform 0.6s ease}
+		.fade-in.visible{opacity:1;transform:translateY(0)}
+
+		/* small responsive */
+		@media(max-width:980px){.grid{grid-template-columns:1fr}}
+	</style>
+</head>
+<body>
+	<div class="lines" aria-hidden="true">
+		<div class="line x" style="top:10%"></div>
+		<div class="line x" style="top:30%;animation-duration:12s;opacity:0.08"></div>
+		<div class="line x" style="top:60%;animation-duration:9s;opacity:0.06"></div>
+		<div class="line y" style="left:20%"></div>
+		<div class="line y" style="left:80%;animation-duration:14s;opacity:0.04"></div>
+	</div>
+
+	<main class="wrap">
+		<header class="fade-in">
+			<div class="logo">CA</div>
+			<div>
+				<h1>Consejos Avanzados de Ciberseguridad</h1>
+				<p class="lead">Prácticas avanzadas para protegerte en el mundo digital.</p>
+			</div>
+		</header>
+
+		<nav>
+			<a class="btn" href="index.html">Resumen</a>
+			<a class="btn" href="tools.html">Herramientas</a>
+			<a class="btn" href="advanced.html">Avanzado / Quiz</a>
+			<a class="btn" href="amenazas.html">Amenazas Comunes</a>
+			<a class="btn primary" href="consejos.html">Consejos Avanzados</a>
+			<a class="btn" href="about.html">Sobre Nosotros</a>
+		</nav>
+
+		<section>
+			<details class="card" open>
+				<div class="section-title">
+					<h2>Consejos Avanzados</h2>
+					<span class="professor">Iberseguridad</span>
+				</div>
+				<p>Además de las medidas básicas, aquí van consejos más avanzados para una protección superior.</p>
+				<div id="advice-content"></div>
+			</details>
+
+			<details class="card fade-in" style="margin-top:14px">
+				<summary><h3>Herramientas Recomendadas</h3></summary>
+				<ul>
+					<li><strong>Antivirus:</strong> Malwarebytes, Bitdefender</li>
+					<li><strong>VPN:</strong> ExpressVPN, NordVPN</li>
+					<li><strong>Gestores de Contraseñas:</strong> KeePass, 1Password</li>
+					<li><strong>Encriptación:</strong> VeraCrypt, AxCrypt</li>
+				</ul>
+			</details>
+
+			<details class="card fade-in" style="margin-top:14px">
+				<summary><h3>Recursos para Aprender Más</h3></summary>
+				<ul>
+					<li><a href="https://www.cybrary.it/" target="_blank">Cybrary - Cursos gratuitos</a></li>
+					<li><a href="https://www.hackthebox.com/" target="_blank">Hack The Box - Laboratorios</a></li>
+					<li><a href="https://owasp.org/" target="_blank">OWASP - Seguridad Web</a></li>
+				</ul>
+			</details>
+		</section>
+
+		<footer>
+			<p>Desarrollado por Iberseguridad — Contenido educativo para 4º ESO.</p>
+		</footer>
+	</main>
+
+	<script>
+		// Simple fade-in on scroll
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+				}
+			});
+		});
+		document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+		// load consejos
+		async function loadConsejos(){
+			try{
+				const res=await fetch('/api/consejos');
+				if(!res.ok) throw new Error('no api');
+				const data=await res.json();
+				const cont=document.getElementById('advice-content');
+				cont.innerHTML='';
+				data.advice.forEach(a=>{
+					const det=document.createElement('details');
+					det.innerHTML='<summary>'+a+'</summary>';
+					cont.appendChild(det);
+				});
+			}catch(e){console.error(e);}
+		}
+		loadConsejos();
+	</script>
+</body>
+</html>

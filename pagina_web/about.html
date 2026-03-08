@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Sobre Iberseguridad</title>
+	<style>
+		:root{--bg:#0a0a0f;--red:#ff3b3b;--muted:#a1b0c2;--panel:#121217;--accent:#00ffcc;--highlight:#ff66cc}
+		html,body{height:100%;margin:0;font-family:Inter, system-ui, Arial, sans-serif;background:var(--bg);color:#f0f0f5}
+		.logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#330000,#500000);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;box-shadow:0 0 8px var(--accent)}
+		h1{color:var(--accent)}
+		.wrap{max-width:1400px;margin:40px auto;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,43,43,0.06)}
+		nav{margin-top:18px;display:flex;gap:10px}
+		.btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
+		.btn.primary{border-color:var(--red);color:var(--red)}
+		.card{background:var(--panel);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);box-shadow:0 4px 15px rgba(0,0,0,0.7);margin-bottom:18px;transition:transform 0.3s, box-shadow 0.3s}
+		.card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.8);border-color:var(--accent)}
+		.carousel{position:relative;overflow:hidden;}
+		.review{display:none;padding:16px;text-align:center;color:#f0f0f5;}
+		.review.active{display:block;}
+		.stars{color:#ffcc00;font-size:1.2em;}
+	</style>
+</head>
+<body>
+	<main class="wrap">
+		<header style="display:flex;align-items:center;gap:18px">
+			<div class="logo">CD</div>
+			<div>
+				<h1>Sobre Iberseguridad</h1>
+				<nav>
+					<a class="btn" href="index.html">Resumen</a>
+					<a class="btn" href="tools.html">Herramientas</a>
+					<a class="btn" href="advanced.html">Avanzado / Quiz</a>
+					<a class="btn" href="amenazas.html">Amenazas Comunes</a>
+					<a class="btn" href="consejos.html">Consejos Avanzados</a>
+					<a class="btn primary" href="about.html">Sobre Nosotros</a>
+				</nav>
+			</div>
+		</header>
+
+		<!-- content will be filled by script -->
+		<section class="card" id="company-section">
+			<h2>Quiénes somos</h2>
+			<p id="company-desc"></p>
+			<p id="company-customers"></p>
+		</section>
+
+		<section class="card" id="services-section">
+			<h2>Servicios de formación</h2>
+			<ul id="services-list"></ul>
+		</section>
+
+		<section class="card" id="itinerary-section">
+			<h2>Itinerario de cursos</h2>
+			<dl id="itinerary-list"></dl>
+		</section>
+
+		<section class="card" id="instructors-section">
+			<h2>Nuestros profesores</h2>
+			<ul id="instructors-list"></ul>
+		</section>
+
+		<section class="card" id="reviews-section">
+			<h2>Reseñas de clientes</h2>
+			<div class="carousel" id="reviews"></div>
+		</section>
+
+	</main>
+
+	<script>
+		async function loadAbout(){
+			try{
+				const res=await fetch('/api/about');
+				if(!res.ok) throw new Error('no api');
+				const data=await res.json();
+				// company
+				document.getElementById('company-desc').textContent = data.company.description;
+				document.getElementById('company-customers').textContent = 'Nuestros clientes: ' + data.company.customers.join(', ') + '.';
+				// services
+				const svcList=document.getElementById('services-list');
+				svcList.innerHTML='';
+				data.services.forEach(s=>{const li=document.createElement('li');li.textContent=s;svcList.appendChild(li);});
+				// itinerary
+				const itin=document.getElementById('itinerary-list');
+				itin.innerHTML='';
+				data.itinerary.forEach(i=>{const dt=document.createElement('dt');dt.textContent=i.title;const dd=document.createElement('dd');dd.textContent=i.details;itin.appendChild(dt);itin.appendChild(dd);});
+				// instructors
+				const ins=document.getElementById('instructors-list');
+				ins.innerHTML='';
+				data.instructors.forEach(p=>{const li=document.createElement('li');li.textContent=p.name+' – '+p.role;ins.appendChild(li);});
+				// reviews carousel
+				const revContainer=document.getElementById('reviews');
+				revContainer.innerHTML='';
+				data.reviews.forEach((r,i)=>{
+					const div=document.createElement('div');div.className='review'+(i===0?' active':'');
+					const stars=document.createElement('p');stars.className='stars';stars.textContent='★'.repeat(r.stars)+ (r.stars<5?'☆'.repeat(5-r.stars):'');
+					const txt=document.createElement('p');txt.textContent='"'+r.text+'" – '+r.author;
+					div.appendChild(stars);div.appendChild(txt);
+					revContainer.appendChild(div);
+				});
+				// start carousel
+				let idx=0;
+				const reviews=document.querySelectorAll('#reviews .review');
+				setInterval(()=>{
+					reviews[idx].classList.remove('active');
+					idx=(idx+1)%reviews.length;
+					reviews[idx].classList.add('active');
+				},4000);
+			}catch(e){
+				console.error('could not load about',e);
+			}
+		}
+		loadAbout();
+	</script>
+</body>
+</html>
