@@ -324,19 +324,23 @@
 				const res = await fetch('/api/content');
 				if(!res.ok) throw new Error('No hay backend');
 				const data = await res.json();
-				// intro texts
-				document.getElementById('intro').textContent = data.intro;
-				document.getElementById('intro-text').textContent = data.intro;
+				// intro texts (override only when provided)
+				if(data.intro) document.getElementById('intro').textContent = data.intro;
+				if(data.introText) document.getElementById('intro-text').textContent = data.introText;
+				if(data.moreDesc) document.getElementById('more-desc').textContent = data.moreDesc;
 				// tools
 				const toolsList = document.getElementById('tools-list');
-				toolsList.innerHTML = '';
-				data.tools.forEach(t=>{const li=document.createElement('li');li.textContent = t;toolsList.appendChild(li)});
+				if(data.tools){
+					toolsList.innerHTML = '';
+					data.tools.forEach(t=>{const li=document.createElement('li');li.textContent = t;toolsList.appendChild(li)});
+				}
 				// areas of security
 				const areaContainer = document.getElementById('areas');
 				if(areaContainer){
 					areaContainer.innerHTML = '<h3>Ámbitos de la ciberseguridad:</h3>';
 					const ul = document.createElement('ul');
-					['Seguridad de red','Seguridad de la información','Seguridad en aplicaciones','Ingeniería social','Criptografía','Forense digital','Seguridad en la nube','Seguridad IoT'].forEach(a=>{const li=document.createElement('li');li.textContent=a;ul.appendChild(li);});
+					const areas = data.areas || ['Seguridad de red','Seguridad de la información','Seguridad en aplicaciones','Ingeniería social','Criptografía','Forense digital','Seguridad en la nube','Seguridad IoT'];
+					areas.forEach(a=>{const li=document.createElement('li');li.textContent=a;ul.appendChild(li);});
 					areaContainer.appendChild(ul);
 				}
 				// threats
