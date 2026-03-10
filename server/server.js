@@ -9,6 +9,7 @@ app.use(express.json());
 app.get('/api/content', (req, res) => {
   res.json({
     intro: 'La ciberseguridad es el conjunto de prácticas y herramientas destinadas a proteger sistemas, redes y datos. Aquí lo explico con rigor académico pero con ejemplos y lenguaje claro para un público general. Incluye definiciones, amenazas comunes, consejos de uso diario y ejemplos de casos reales.',
+    moreDesc: 'Desde pequeñas contraseñas personales hasta infraestructuras críticas de un país, la ciberseguridad abarca todos los niveles. Se trata de anticipar y reaccionar: anticipar posibles ataques y reaccionar rápidamente cuando algo falla. El objetivo final es mantener la confidencialidad, integridad y disponibilidad de la información.',
     tools: [
       'Antivirus y antimalware',
       'Firewalls (cortafuegos)',
@@ -22,9 +23,12 @@ app.get('/api/content', (req, res) => {
       'Herramientas de escaneo (Nmap, Wireshark)',
       'Cifrado de disco (BitLocker, VeraCrypt)',
       'Monitoreo de logs',
-      'Educación y concienciación'
+      'Educación y concienciación',
+      'Hardening de sistemas',
+      'Análisis de malware',
+      'Simuladores de hacking (laboratorios virtuales)'
     ],
-    images: ['/api/images/1','/api/images/2'],
+    images: ['/api/images/1','/api/images/2','/api/images/3'],
     threats: [
       {title: 'Phishing', desc: 'Emails o sitios falsos que piden datos personales.'},
       {title: 'Malware', desc: 'Software malicioso que daña o espía dispositivos.'},
@@ -32,14 +36,20 @@ app.get('/api/content', (req, res) => {
       {title: 'Man-in-the-Middle', desc: 'Intercepción de comunicaciones en redes públicas.'},
       {title: 'DDoS', desc: 'Ataques que sobrecargan servicios para hacerlos inaccesibles.'},
       {title: 'Ingeniería social', desc: 'Manipulación psicológica para obtener información.'},
-      {title: 'Ataques de fuerza bruta', desc: 'Intentos repetidos de adivinar contraseñas.'}
+      {title: 'Ataques de fuerza bruta', desc: 'Intentos repetidos de adivinar contraseñas.'},
+      {title: 'SQL Injection', desc: 'Inyección de código malicioso en bases de datos web.'},
+      {title: 'Zero-day exploits', desc: 'Ataques a vulnerabilidades desconocidas que no tienen parche.'},
+      {title: 'Ataques a IoT', desc: 'Dispositivos conectados inseguros, como cámaras o termostatos.'},
+      {title: 'Rootkits', desc: 'Software diseñado para ocultar la presencia de intrusos dentro de un sistema.'}
     ],
     incidents: [
       '2017: WannaCry afectó a 200.000 equipos en 150 países.',
       '2020: SolarWinds hackeó agencias gubernamentales de EE.UU.',
       '2021: Colonial Pipeline sufrió un ciberataque que causó escasez de combustible.',
       '2023: Ataque a MOVEit Transfer afectó a millones de usuarios.',
-      '2024: Breach en Change Healthcare expuso datos médicos.'
+      '2024: Breach en Change Healthcare expuso datos médicos.',
+      '2016: Mirai Botnet paralizó grandes plataformas usando IoT inseguro.',
+      '2014: Heartbleed expuso claves privadas en OpenSSL.'
     ],
     tips: [
       'No compartas contraseñas ni códigos de verificación.',
@@ -51,7 +61,12 @@ app.get('/api/content', (req, res) => {
       'Configura copias de seguridad periódicas.',
       'Segmenta redes (separa invitados de dispositivos principales).',
       'Desconfía de enlaces y adjuntos en emails desconocidos.',
-      'Monitorea tus cuentas bancarias regularmente.'
+      'Monitorea tus cuentas bancarias regularmente.',
+      'Haz auditorías de seguridad regulares.',
+      'Educa a tu familia sobre riesgos en línea.',
+      'Utiliza autenticación biométrica donde esté disponible.',
+      'Asegura tu red Wi-Fi con WPA3 cuando sea posible.',
+      'No uses la misma contraseña en múltiples sitios.'
     ],
     glossary: [
       {term: 'Antivirus', definition: 'Software que detecta y elimina malware.'},
@@ -63,7 +78,20 @@ app.get('/api/content', (req, res) => {
       {term: 'IDS', definition: 'Sistema de detección de intrusiones.'},
       {term: 'IPS', definition: 'Sistema de prevención de intrusiones.'},
       {term: 'Criptografía', definition: 'Ciencia de proteger información mediante códigos.'},
-      {term: 'Zero Trust', definition: 'Modelo de seguridad que no confía en nadie por defecto.'}
+      {term: 'Zero Trust', definition: 'Modelo de seguridad que no confía en nadie por defecto.'},
+      {term: 'Hardening', definition: 'Proceso de reforzar un sistema reduciendo su superficie de ataque.'},
+      {term: 'Forense digital', definition: 'Análisis de evidencia tras un incidente.'}
+    ],
+    statistics: [
+      {label: 'Número de ataques anuales', value: 'más de 1.5 mil millones'},
+      {label: 'Coste promedio de una brecha', value: 'USD 3.86 millones'},
+      {label: 'Porcentaje de empresas afectadas', value: '72% reporta al menos un incidente al año'}
+    ],
+    faq: [
+      {q: '¿Qué es un firewall?', a: 'Un dispositivo o software que controla el tráfico entre redes y bloquea accesos no autorizados.'},
+      {q: '¿Por qué necesito un antivirus?', a: 'Para detectar y eliminar software malicioso que podría robar datos o dañar tu equipo.'},
+      {q: '¿Qué hace una VPN?', a: 'Cifra tu conexión y protege tu privacidad cuando usas redes públicas.'},
+      {q: '¿Qué es un ataque DDoS?', a: 'Es saturar un servicio con tráfico falso hasta que deja de funcionar.'}
     ]
   });
 });
@@ -85,7 +113,10 @@ app.get('/api/tools', (req, res) => {
       {name: 'Herramientas de escaneo', why: 'Como Nmap o Wireshark para analizar redes y detectar vulnerabilidades.'},
       {name: 'Cifrado de disco', why: 'Herramientas como BitLocker o VeraCrypt para proteger datos en reposo.'},
       {name: 'Monitoreo de logs', why: 'Revisar registros de actividad para detectar anomalías.'},
-      {name: 'Educación y concienciación', why: 'Entrenamiento para usuarios sobre phishing y buenas prácticas.'}
+      {name: 'Educación y concienciación', why: 'Entrenamiento para usuarios sobre phishing y buenas prácticas.'},
+      {name: 'Seguridad móvil', why: 'Apps para examinar y proteger dispositivos Android/iOS.'},
+      {name: 'Hardening de sistemas', why: 'Reducir servicios y parches para minimizar vectores de ataque.'},
+      {name: 'Analizadores de vulnerabilidades', why: 'Herramientas como Nessus o OpenVAS para escanear sistemas.'}
     ]
   });
 });
@@ -109,7 +140,10 @@ app.get('/api/advanced', (req, res) => {
       {topic: 'Zero Trust Architecture', desc: 'Nunca confíes, siempre verifica: principios y implementación.'},
       {topic: 'Blockchain y seguridad', desc: 'Cómo la cadena de bloques mejora la integridad de datos.'},
       {topic: 'IoT Security', desc: 'Desafíos en dispositivos conectados y mejores prácticas.'},
-      {topic: 'Regulaciones y compliance', desc: 'GDPR, NIST, ISO 27001 y su aplicación.'}
+      {topic: 'Regulaciones y compliance', desc: 'GDPR, NIST, ISO 27001 y su aplicación.'},
+      {topic: 'Seguridad móvil', desc: 'Protección de smartphones y tablets; permisos de apps.'},
+      {topic: 'Seguridad en contenedores', desc: 'Docker/Kubernetes: cómo asegurar aplicaciones empaquetadas.'},
+      {topic: 'Seguridad industrial (ICS)', desc: 'Protección de sistemas de control de infraestructuras.'}
     ]
   });
 });
@@ -122,6 +156,15 @@ app.get('/api/about', (req, res) => {
       description: 'Empresa de formación y consultoría en ciberseguridad con más de 10 años de experiencia. Ofrecemos cursos para estudiantes, profesionales y organizaciones de habla hispana.',
       customers: ['Institutos educativos', 'PYMEs', 'Entidades públicas', 'Particulares']
     },
+    mission: 'Nuestra misión es democratizar el conocimiento de la ciberseguridad, dotando a todas las personas y organizaciones de las herramientas necesarias para protegerse frente a las amenazas digitales.',
+    vision: 'Ser referentes en formación práctica en español, fomentando una comunidad de profesionales éticos capaces de construir un internet más seguro.',
+    contact: {email: 'info@iberseguridad.es', phone: '+34 912 345 678'},
+    history: [
+      {year: 2013, event: 'Fundación de Iberseguridad como pequeña startup educativa.'},
+      {year: 2016, event: 'Primer curso presencial en un instituto público.'},
+      {year: 2019, event: 'Expansión a cursos online y certificaciones.'},
+      {year: 2022, event: 'Más de 10.000 alumnos formados y colaboración con administraciones.'}
+    ],
     services: [
       'Bootcamps intensivos de 3-5 días',
       'Cursos semanales de 8 a 12 semanas',
@@ -207,7 +250,11 @@ app.get('/api/consejos', (req, res) => {
       'Educa a tu familia sobre riesgos en línea.',
       'Usa autenticación multifactor en todas las cuentas importantes.',
       'Evita descargar software de fuentes no confiables.',
-      'Mantén tus dispositivos físicos seguros (no los dejes desatendidos).'
+      'Mantén tus dispositivos físicos seguros (no los dejes desatendidos).',
+      'Haz auditorías regulares de seguridad en tu red doméstica.',
+      'Utiliza autenticación biométrica cuando esté disponible.',
+      'Asegura tu red Wi-Fi con WPA3 o WPA2 con contraseña fuerte.',
+      'Revisa permisos de aplicaciones en tu teléfono y desinstala las innecesarias.'
     ]
   });
 });

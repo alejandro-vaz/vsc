@@ -48,15 +48,27 @@
 		</div>
 	</details>
 
-	<details class="card" id="services-section">
-		<summary><h2>Servicios de formación</h2></summary>
-		<div>
-			<ul id="services-list"></ul>
-		</div>
-	</details>
+<details class="card" id="mission-section">
+	<summary><h2>Misión y Visión</h2></summary>
+	<div>
+		<p id="mission"></p>
+		<p id="vision"></p>
+	</div>
+</details>
 
-	<details class="card" id="itinerary-section">
-		<summary><h2>Itinerario de cursos</h2></summary>
+<details class="card" id="contact-section">
+	<summary><h2>Contacto</h2></summary>
+	<div>
+		<p id="contact-info"></p>
+	</div>
+</details>
+
+<details class="card" id="history-section">
+	<summary><h2>Nuestra historia</h2></summary>
+	<div>
+		<ul id="history-list"></ul>
+	</div>
+</details>
 		<div>
 			<dl id="itinerary-list"></dl>
 		</div>
@@ -87,6 +99,15 @@
 				// company
 				document.getElementById('company-desc').textContent = data.company.description;
 				document.getElementById('company-customers').textContent = 'Nuestros clientes: ' + data.company.customers.join(', ') + '.';
+				// mission, vision, contact, history
+				if(data.mission) document.getElementById('mission').textContent = data.mission;
+				if(data.vision) document.getElementById('vision').textContent = data.vision;
+				if(data.contact) document.getElementById('contact-info').textContent = 'Email: ' + data.contact.email + ' | Tel: ' + data.contact.phone;
+				if(data.history){
+					const histEl = document.getElementById('history-list');
+					histEl.innerHTML='';
+					data.history.forEach(h=>{const li=document.createElement('li');li.textContent=h.year+' – '+h.event;histEl.appendChild(li);});
+				}
 				// services
 				const svcList=document.getElementById('services-list');
 				svcList.innerHTML='';

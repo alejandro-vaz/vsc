@@ -190,6 +190,16 @@
                         </ul>
                     </details>
 
+                    <details class="card" style="margin-top:10px">
+                        <summary><h3>Estadísticas clave</h3></summary>
+                        <div id="statistics"></div>
+                    </details>
+
+                    <details class="card" style="margin-top:10px">
+                        <summary><h3>Preguntas frecuentes</h3></summary>
+                        <div id="faq"></div>
+                    </details>
+
                     <details>
                         <summary><strong>Ciberseguridad en el futuro</strong></summary>
                         <p>La ciberseguridad evoluciona rápidamente con nuevas tecnologías como la inteligencia artificial, blockchain y el metaverso. En el futuro, se espera que:</p>
@@ -368,6 +378,18 @@
 				if(tipsEl && data.tips){
 					tipsEl.innerHTML='';
 					data.tips.forEach(t=>{const li=document.createElement('li');li.textContent=t;tipsEl.appendChild(li);});
+				}
+				// statistics
+				const statEl=document.getElementById('statistics');
+				if(statEl && data.statistics){
+					statEl.innerHTML='';
+					data.statistics.forEach(s=>{const p=document.createElement('p');p.innerHTML='<strong>'+s.label+':</strong> '+s.value;statEl.appendChild(p);});
+				}
+				// faq
+				const faqEl=document.getElementById('faq');
+				if(faqEl && data.faq){
+					faqEl.innerHTML='';
+					data.faq.forEach(f=>{const d=document.createElement('details'); d.innerHTML='<summary>'+f.q+'</summary><p>'+f.a+'</p>';faqEl.appendChild(d);});
 				}
 			}catch(e){
 				document.getElementById('intro').textContent = 'Servidor backend no disponible localmente. El contenido está en el frontend.';
