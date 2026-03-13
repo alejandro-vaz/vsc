@@ -5,10 +5,12 @@ Proyecto de ejemplo: sitio con estilo sci‑fi para explicar ciberseguridad a un
 Este proyecto está pensado para mantenerse bajo control de versiones con Git; incluye un `.gitignore` estándar para Node/VSCode y puedes iniciar un repositorio local con:
 
 ```bash
-cd "pagina web"
-git init
-git add .
-git commit -m "inicial" 
+# clonar repositorio desde github
+git clone https://github.com/Boguelin/vsc
+
+# repositorio ya inicializado al clonar
+# abrir en vscode
+code vsc
 ```
 
 Estructura:
@@ -19,12 +21,11 @@ Estructura:
 - server/server.js — backend Express que sirve contenido JSON y huecos para imágenes
 - package.json — dependencias y script de inicio
 
-Instalación y ejecución (Linux):
+Instalación y ejecución (todos los sistemas operativos),  requiere `npm`:
 
 ```bash
-cd "pagina web"
-npm install
-npm start
+cd vsc # nombre del repositorio actual
+npm i && npm start
 ```
 
 El servidor se levantará en `http://localhost:3000` y sirve los archivos estáticos y las APIs:
